@@ -57,5 +57,8 @@ class TabbedPanelApp(App):
         return Test()
 
 
+
+# def : constantly access the folder and check for updates for every information
+
 if __name__ == '__main__':
     TabbedPanelApp().run()
