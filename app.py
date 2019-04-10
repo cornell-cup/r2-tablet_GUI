@@ -20,8 +20,11 @@ Builder.load_string("""
 
     TabbedPanelItem:
         text: 'General Info' 
-        Label:
-            text: 'This is Cornell Cup'
+        RstDocument:
+            text:
+                '\\n'.join(("Hi there :)", "-----------",
+                "This is Cornell Cup. "
+                "I am R2. Nice to meet you!"))
             
     TabbedPanelItem:
         text: 'Visual Img'
