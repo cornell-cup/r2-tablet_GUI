@@ -4,6 +4,7 @@ from PIL import ImageTk, Image
 import threading
 import time
 
+
 class GUIapp():
     def __init__(self):
         self.i = 0
@@ -50,6 +51,10 @@ class GUIapp():
         self.data4.grid(row=3, column=1, padx=5, pady=5)
         self.data5.grid(row=5, column=0, padx=5, pady=5, rowspan=1)
 
+        # create a thread to constantly update the text in the streaming tab
+        thread1 = threading.Thread(target=self.update_stream_text)
+        thread1.start()
+
         # tab 4 information : Sign up
 
 
@@ -62,15 +67,14 @@ class GUIapp():
         self.note.add(self.tab4, text="Sign up")
         self.note.pack()
 
-        # create a thread to constantly update the text in the streaming tab
-        thread1 = threading.Thread(target=self.update_stream_text)
-        thread1.start()
+
 
         root.mainloop()
 
     # update the text in the streaming tab once a second
     def update_stream_text(self):
         while 1:
+            # update the text
             FacialRecognitionResult = open('FacialRecognitionResult.txt', 'r').read()
             VoiceRecognitionText = open('VoiceRecognitionText.txt', 'r').read()
             SentimentAnalysisOutput = open('SentimentAnalysisOutput.txt', 'r').read()
@@ -79,6 +83,13 @@ class GUIapp():
             self.data2['text'] = VoiceRecognitionText
             self.data4['text'] = SentimentAnalysisOutput
             self.data5['text'] = ObjectDetectionResult
+
+            Facial_Recognition_Photo_path = "cropped.jpg"
+            img = Image.open(Facial_Recognition_Photo_path)
+            img = img.resize((180, 180), Image.ANTIALIAS)
+            Facial_Recognition_Photo_img = ImageTk.PhotoImage(img)
+            # update the photo
+            self.data3['image'] = Facial_Recognition_Photo_img
             self.tab3.update()
             # make the system sleep for 1 second
             time.sleep(1)
