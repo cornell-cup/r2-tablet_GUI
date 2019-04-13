@@ -1,23 +1,11 @@
 from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk, Image
-from tkinter import font
 import threading
 import time
 
 
 class GUIapp():
-
-    def save_info(self):
-        m = self.entry1.get()
-        print(m)
-        with open('txt.txt', 'a') as the_file:
-            the_file.write(m + '\n')
-        self.clear_text()
-
-    def clear_text(self):
-        self.entry1.delete(0, 'end')
-
     def __init__(self):
         self.i = 0
         root = Tk()
@@ -69,21 +57,17 @@ class GUIapp():
 
         # tab 4 information : Sign up
 
-        self.note.add(self.tab4, text="Sign Up")
-        self.text = Label(self.tab4, text="Enter your Email here", font=("Courier", 20))
-        self.text.pack(side=LEFT)
-        self.entry1 = Entry(self.tab4)
-        self.text.grid(row=0, sticky=W)
-        self.entry1.grid(row=0, column=1)
-        b = Button(self.tab4, text="OK", command=self.save_info, height = 5, width = 5, )
 
-        b.grid(row=3, sticky=S)
+
+
 
         self.note.add(self.tab1, text="General Info")
         self.note.add(self.tab2, text="Visual Img")
         self.note.add(self.tab3, text="Data Streaming")
         self.note.add(self.tab4, text="Sign up")
         self.note.pack()
+
+
 
         root.mainloop()
 
