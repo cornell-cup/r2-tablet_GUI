@@ -32,7 +32,6 @@ Builder.load_string("""
             Label:
                 text: 'Second tab content area'
 
-
     TabbedPanelItem:
         text: 'Streaming'
         RstDocument:
@@ -49,7 +48,7 @@ Builder.load_string("""
                 text: 'Button that does nothing'
 
     TabbedPanelItem:
-        text: 'testing'
+        text: "testing input"
         BoxLayout:
 
             BoxLayout:
@@ -60,17 +59,48 @@ Builder.load_string("""
                 Label:
                     text: "Enter your email"
                     size_hint_x: .25
+                    size_hint_y: 1
                     spacing: .2, .2
 
                 TextInput:
                     id: txt_searh
                     text: ""
-                    size_hint_x: .3
+                    size_hint_x: .5
+                    size_hint_y: 0.1
                     spacing: .2, .2
 
                 Label:
                     id: lbl_search
                     size_hint_y:None
+
+    TabbedPanelItem:
+        text: 'testing layout'
+        BoxLayout:
+            size_hint_x: 1
+            size_hint_y: 1
+            Label:
+                size_hint_x: 0.3
+                halign: "left"
+                valign: "top"
+                text: "Enter your email"
+            BoxLayout:
+                size_hint_x: 0.7
+                size_hint_y: 1
+                halign: "left"
+                valign: "top"
+                TextInput:
+                    id: txt_searh
+                    text: "email here"
+                    size_hint_x: 0.3
+                    size_hint_y: 0.1
+                    valigh: "middle"
+                    spacing: .2,.2
+                Button:
+                    text: "Complete"
+                    size_hint_x: 0.1
+                    size_hint_y: 0.2
+                    color:
+
 
 """)
 
