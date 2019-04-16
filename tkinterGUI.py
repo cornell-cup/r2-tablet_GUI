@@ -22,6 +22,7 @@ class GUIapp():
         self.i = 0
         root = Tk()
         root.geometry("750x450")
+        root.attributes('-fullscreen', True)
         self.note = ttk.Notebook(root)
 
         self.tab1 = ttk.Frame(self.note)
@@ -69,7 +70,6 @@ class GUIapp():
 
         # tab 4 information : Sign up
 
-        self.note.add(self.tab4, text="Sign Up")
         self.text = Label(self.tab4, text="Enter your Email here", font=("Courier", 20))
         self.text.pack(side=LEFT)
         self.entry1 = Entry(self.tab4)
@@ -91,13 +91,13 @@ class GUIapp():
     def update_stream_text(self):
         while 1:
             # update the text
-            FacialRecognitionResult = open('FacialRecognitionResult.txt', 'r').read()
             VoiceRecognitionText = open('VoiceRecognitionText.txt', 'r').read()
             SentimentAnalysisOutput = open('SentimentAnalysisOutput.txt', 'r').read()
+            FacialRecognitionResult = open('FacialRecognitionResult.txt', 'r').read()
             ObjectDetectionResult = open('ObjectDetectionResult.txt', 'r').read()
-            self.data1['text'] = FacialRecognitionResult
-            self.data2['text'] = VoiceRecognitionText
-            self.data4['text'] = SentimentAnalysisOutput
+            self.data1['text'] = VoiceRecognitionText
+            self.data2['text'] = SentimentAnalysisOutput
+            self.data4['text'] = FacialRecognitionResult
             self.data5['text'] = ObjectDetectionResult
 
             Facial_Recognition_Photo_path = "cropped.jpg"
