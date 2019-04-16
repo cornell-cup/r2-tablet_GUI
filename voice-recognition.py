@@ -32,6 +32,7 @@ liteClient = retinasdk.LiteClient(apiKey)
 import threading
 from threading import Lock, Thread
 lock = Lock()
+lock2 = Lock()
 
 naturalLanguageUnderstanding = NaturalLanguageUnderstandingV1(
 version='2018-11-16',
@@ -44,6 +45,7 @@ wakeup_final = 998
 sleep_final = 997
 move_final = 996
 attendance_final = 995
+sentiment_value = 0
 		
 """
 listen to user statement in mic
@@ -166,6 +168,14 @@ def writeToVoice(input):
 	file.close()	
 	lock.release()
 
+def writeToSentiment(score):
+	lock2.acquire()
+	score1 = str(score)
+	file=open('SentimentAnalysisOutput.txt','w+')
+	file.write(score1 + "\r\n")
+	file.close()	
+	lock2.release()
+
 def sentiment(input):
 	try:				
 		response = naturalLanguageUnderstanding.analyze(
@@ -260,8 +270,6 @@ def main():
 			
 		#run through commands first
 		elif ("VB" in tagged[0]):
-				
-			t1 = threading.Thread(target = writeToVoice, args=(spoken,score=0.0))
 			
 			if ("high five" in spoken):
 				keywords.append("high five")
@@ -297,15 +305,12 @@ def main():
 					elif ("rock paper scissors" in keywords or "game" in keywords):
 						game("rock paper scissors")
 					"""
-					
-				#writeToVoice(spoken)
-				t1.start()
-				t1.join()
 		
 		else:	
 			
 			#sentiment analysis
 			try:				
+				global sentiment_value
 				response = naturalLanguageUnderstanding.analyze(
 				text=spoken,
 				features=Features(
@@ -316,13 +321,23 @@ def main():
 				document = sentiment['document']
 				score = document['score']
 				sentiment_value = float(score)
-			
+				
 			except:
 				sentiment_value = sid().polarity_scores(spoken)['compound']
 			
+				
 			print(sentiment_value)	
 			react_with_sound(sentiment_value)
-
+		
+		#writeToVoice(spoken)
+		
+		t1 = threading.Thread(target = writeToVoice, args=(spoken,))
+		t2 = threading.Thread(target = writeToSentiment, args=(sentiment_value,))
+		t1.start()
+		t2.start()
+		t1.join()
+		t2.join()
+			
 main()
 
 #multithreading plan: add locks to prevent GUI program from accessing text file data too quickly while the text file is writing
