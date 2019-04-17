@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk, Image
+import os
 from tkinter import font
 import threading
 import time
@@ -29,6 +30,7 @@ class GUIapp():
         self.tab2 = ttk.Frame(self.note)
         self.tab3 = ttk.Frame(self.note)
         self.tab4 = ttk.Frame(self.note)
+        self.quitButton = ttk.Button(self.note, text="Quit the program", command=quit)
 
         # tab 1 information : General Info
         text = Label(self.tab1, text="This is Cornell Cup.", width=50)
@@ -69,7 +71,6 @@ class GUIapp():
         thread1.start()
 
         # tab 4 information : Sign up
-
         self.text = Label(self.tab4, text="Enter your Email here", font=("Courier", 20))
         self.text.pack(side=LEFT)
         self.entry1 = Entry(self.tab4)
@@ -83,6 +84,7 @@ class GUIapp():
         self.note.add(self.tab2, text="Visual Img")
         self.note.add(self.tab3, text="Data Streaming")
         self.note.add(self.tab4, text="Sign up")
+        self.note.add(self.quitButton, text="For Staff Only")
         self.note.pack()
 
         root.mainloop()
