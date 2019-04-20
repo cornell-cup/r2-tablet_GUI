@@ -25,6 +25,7 @@ class GUIapp():
         root = Tk()
         root.geometry("750x450")
         root.attributes('-fullscreen', False)
+        root.title('CornellCups-R2')
         self.note = ttk.Notebook(root)
 
         self.tab1 = ttk.Frame(self.note)
