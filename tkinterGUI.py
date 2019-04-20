@@ -76,8 +76,7 @@ class GUIapp():
         self.entry1 = Entry(self.tab4)
         self.text.grid(row=0, sticky=W)
         self.entry1.grid(row=0, column=1)
-        b = Button(self.tab4, text="OK", command=self.save_info, height = 5, width = 5, )
-
+        b = Button(self.tab4, text="OK", command=self.save_info, height = 5, width = 5)
         b.grid(row=3, sticky=S)
 
         self.note.add(self.tab1, text="General Info")
