@@ -23,7 +23,7 @@ class GUIapp():
         self.i = 0
         root = Tk()
         root.geometry("750x450")
-        root.attributes('-fullscreen', True)
+        root.attributes('-fullscreen', False)
         self.note = ttk.Notebook(root)
 
         self.tab1 = ttk.Frame(self.note)
