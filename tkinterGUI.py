@@ -25,7 +25,7 @@ class GUIapp():
         root = Tk()
         root.geometry("750x450")
         root.attributes('-fullscreen', False)
-        root.title("")
+        root.title("R2 GUI")
         self.note = ttk.Notebook(root)
 
         self.tab1 = ttk.Frame(self.note)
@@ -57,8 +57,8 @@ class GUIapp():
                "generate interest in its design process through a Kickstarter campaign.\n" \
                "        This hopefully will work toward the long-term goal of " \
                "having our R2 robot appear in a Star Wars movie."
-        text = Label(self.tab1, text=info, width= 60 , wraplength = 450, font=("Arial, 15"), justify = 'left')
-        text.place(x= -50 , y=120)
+        text = Label(self.tab1, text=info, width= 60 , wraplength = 450, font=("Arial, 12"), justify = 'left')
+        text.place(x= -10 , y=120)
 
         # tab 2 information : Visual Img
         # initialize video stream
