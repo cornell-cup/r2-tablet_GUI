@@ -1,10 +1,11 @@
 from tkinter import *
 from tkinter import ttk
 from PIL import ImageTk, Image
-import os
-from tkinter import font
 import threading
 import time
+import imutils
+import cv2
+from imutils.video import VideoStream
 
 
 class GUIapp():
@@ -31,6 +32,7 @@ class GUIapp():
         self.tab3 = ttk.Frame(self.note)
         self.tab4 = ttk.Frame(self.note)
         self.quitButton = ttk.Button(self.note, text="Quit the program", command=quit)
+        self.panel = None
 
         # tab 1 information : General Info
         info = "The original R2D2 Project focused upon creating a semi-autonomous \n " \
@@ -48,6 +50,10 @@ class GUIapp():
         text.pack(side=LEFT)
 
         # tab 2 information : Visual Img
+        # initialize video stream
+        self.vs = VideoStream().start()
+        video_thread = threading.Thread(target=self.update_stream_text)
+        video_thread.start()
 
         # tab 3 information : Data Streaming
         Facial_Recognition_Photo_path = "cropped.jpg"
@@ -122,5 +128,28 @@ class GUIapp():
             # make the system sleep for 1 second
             time.sleep(1)
 
+    def videoLoop(self):
+        # keep looping over frames until we are instructed to stop
+        while 1:
+            # grab the frame from the video stream and resize it to
+            # have a maximum width of 300 pixels
+            self.frame = self.vs.read()
+            self.frame = imutils.resize(self.frame, width=500)
+            # OpenCV represents images in BGR order; however PIL
+            # represents images in RGB order, so we need to swap
+            # the channels, then convert to PIL and ImageTk format
+            image = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB)
+            image = Image.fromarray(image)
+            image = ImageTk.PhotoImage(image)
+            # if the panel is not None, we need to initialize it
+            if self.panel is None:
+                self.panel = Label(self.tab2, image=image, width=500)
+                self.panel.image = image
+                self.panel.pack(side="left", padx=10, pady=10)
+
+            # otherwise, simply update the panel
+            else:
+                self.panel.configure(image=image)
+                self.panel.image = image
 
 GUIapp()
