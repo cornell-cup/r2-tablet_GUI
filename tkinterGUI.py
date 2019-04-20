@@ -13,7 +13,7 @@ class GUIapp():
     def save_info(self):
         m = self.entry1.get()
         print(m)
-        with open('txt.txt', 'a') as the_file:
+        with open('email-list.txt', 'a') as the_file:
             the_file.write(m + '\n')
         self.clear_text()
 
