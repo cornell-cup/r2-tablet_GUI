@@ -25,6 +25,7 @@ class GUIapp():
         root = Tk()
         root.geometry("750x450")
         root.attributes('-fullscreen', False)
+        root.title("Cornell Cup Robotics")
         self.note = ttk.Notebook(root)
 
         self.tab1 = ttk.Frame(self.note)
@@ -42,22 +43,22 @@ class GUIapp():
         label_pic = Label(self.tab1, image=Label_Img)
         label_pic.place(x=0, y=0)
 
-        text_intro = Label(self.tab1, text="Hi, this is Cornell Cup Robotics!", width=30)
-        text_intro.place(x=150, y=30)
+        text_intro = Label(self.tab1, text="Hi, this is Cornell Cup Robotics!", width=30, font=("Arial", 17, "bold"))
+        text_intro.place(x=130, y=30)
 
-        info = "The original R2D2 Project focused upon creating a semi-autonomous \n " \
-               "lab assistant that could navigate and map out its surrounding \n" \
-               "environment. Since last year, the team has expanded upon R2’s ability \n " \
-               "to interact with its surroundings enabling the droid to complete tasks \n" \
-               " such as getting food from a fridge, opening a door, recognizing and \n " \
-               "greeting individual people, and even firing a nerf dart at a target. \n" \
-               "To generate excitement and interest in robotics and engineering, \n" \
-               "the team aims to advertise the R2 project and \n" \
-               "generate interest in its design process through a Kickstarter campaign. \n" \
-               "This hopefully will work toward the long-term goal of \n" \
+        info = "        The original R2D2 Project focused upon creating a semi-autonomous " \
+               "lab assistant that could navigate and map out its surrounding " \
+               "environment. Since last year, the team has expanded upon R2’s ability " \
+               "to interact with its surroundings enabling the droid to complete tasks " \
+               "such as getting food from a fridge, opening a door, recognizing and " \
+               "greeting individual people, and even firing a nerf dart at a target. " \
+               "To generate excitement and interest in robotics and engineering, " \
+               "the team aims to advertise the R2 project and " \
+               "generate interest in its design process through a Kickstarter campaign.\n" \
+               "        This hopefully will work toward the long-term goal of " \
                "having our R2 robot appear in a Star Wars movie."
-        text = Label(self.tab1, text=info, width=60)
-        text.pack(side=LEFT)
+        text = Label(self.tab1, text=info, width= 60 , wraplength = 450, font=("Arial, 15"), justify = 'left')
+        text.place(x= -50 , y=120)
 
         # tab 2 information : Visual Img
         # initialize video stream
