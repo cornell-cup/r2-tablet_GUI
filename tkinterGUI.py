@@ -99,13 +99,13 @@ class GUIapp():
         thread1.start()
 
         # tab 4 information : Sign up
-        self.text = Label(self.tab4, text="Enter your Email here", font=("Courier", 20))
+        self.text = Label(self.tab4, text="Enter your Email here: ", font=("Helvetica", 18 ,"bold"))
         self.text.pack(side=LEFT)
         self.entry1 = Entry(self.tab4)
         self.text.grid(row=3, sticky=W)
         self.entry1.grid(row=3, column=1)
-        b = Button(self.tab4, text="OK", command=self.save_info, height = 3, width = 4)
-        b.grid(row=3, column = 4, sticky=E)
+        b = Button(self.tab4, text="OK", command=self.save_info, height = 5, width = 10, font="Helvetica")
+        b.grid(row=3, column = 3, sticky=E)
 
         self.note.add(self.tab1, text="General Info")
         self.note.add(self.tab2, text="Visual Img")

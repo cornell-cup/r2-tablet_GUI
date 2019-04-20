@@ -16,8 +16,8 @@
       <file leaf-file-name="tkinterGUI.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tkinterGUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="78" column="83" selection-start-line="78" selection-start-column="83" selection-end-line="78" selection-end-column="83" />
+            <state relative-caret-position="243">
+              <caret line="106" column="93" selection-start-line="106" selection-start-column="93" selection-end-line="106" selection-end-column="93" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -215,7 +215,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-3" y="23" width="1365" height="777" extended-state="0" />
+    <frame x="-42" y="23" width="1365" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13318452" />
@@ -453,8 +453,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tkinterGUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="78" column="83" selection-start-line="78" selection-start-column="83" selection-end-line="78" selection-end-column="83" />
+        <state relative-caret-position="243">
+          <caret line="106" column="93" selection-start-line="106" selection-start-column="93" selection-end-line="106" selection-end-column="93" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
