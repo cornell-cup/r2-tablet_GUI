@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="914432da-d829-4daf-9c5c-1376ddb7bc3d" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/r2-tablet_GUI.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/r2-tablet_GUI.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tkinterGUI.py" beforeDir="false" afterPath="$PROJECT_DIR$/tkinterGUI.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,8 +16,8 @@
       <file leaf-file-name="tkinterGUI.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tkinterGUI.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="27" column="42" lean-forward="true" selection-start-line="27" selection-start-column="42" selection-end-line="27" selection-end-column="42" />
+            <state relative-caret-position="185">
+              <caret line="78" column="83" selection-start-line="78" selection-start-column="83" selection-end-line="78" selection-end-column="83" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -67,7 +64,7 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-3" />
+    <option name="x" value="-42" />
     <option name="y" value="23" />
     <option name="width" value="1365" />
     <option name="height" value="777" />
@@ -456,8 +453,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tkinterGUI.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="27" column="42" lean-forward="true" selection-start-line="27" selection-start-column="42" selection-end-line="27" selection-end-column="42" />
+        <state relative-caret-position="185">
+          <caret line="78" column="83" selection-start-line="78" selection-start-column="83" selection-end-line="78" selection-end-column="83" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>
