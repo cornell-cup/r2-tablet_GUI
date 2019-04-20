@@ -35,6 +35,16 @@ class GUIapp():
         self.panel = None
 
         # tab 1 information : General Info
+        Cup_Label_path = "cup.jpg"
+        img = Image.open(Cup_Label_path)
+        img = img.resize((100, 100), Image.ANTIALIAS)
+        Label_Img = ImageTk.PhotoImage(img)
+        label_pic = Label(self.tab1, image=Label_Img)
+        label_pic.place(x=0, y=0)
+
+        text_intro = Label(self.tab1, text="Hi, this is Cornell Cup Robotics!", width=30)
+        text_intro.place(x=150, y=30)
+
         info = "The original R2D2 Project focused upon creating a semi-autonomous \n " \
                "lab assistant that could navigate and map out its surrounding \n" \
                "environment. Since last year, the team has expanded upon R2’s ability \n " \
