@@ -63,7 +63,7 @@ class GUIapp():
         # tab 2 information : Visual Img
         # initialize video stream
         self.vs = VideoStream().start()
-        video_thread = threading.Thread(target=self.update_stream_text)
+        video_thread = threading.Thread(target=self.videoLoop)
         video_thread.start()
 
         # tab 3 information : Data Streaming
@@ -94,10 +94,6 @@ class GUIapp():
         self.data4.grid(row=3, column=1, padx=5, pady=5)
         self.data5.grid(row=5, column=0, padx=5, pady=5, rowspan=1)
 
-        # create a thread to constantly update the text in the streaming tab
-        thread1 = threading.Thread(target=self.update_stream_text)
-        thread1.start()
-
         # tab 4 information : Sign up
         self.text = Label(self.tab4, text="Enter your Email here: ", font=("Helvetica", 18 ,"bold"))
         self.text.pack(side=LEFT)
@@ -113,6 +109,10 @@ class GUIapp():
         self.note.add(self.tab4, text="Sign up")
         self.note.add(self.quitButton, text="For Staff Only")
         self.note.pack()
+
+        # create a thread to constantly update the text in the streaming tab
+        thread1 = threading.Thread(target=self.update_stream_text)
+        thread1.start()
 
         root.mainloop()
 
