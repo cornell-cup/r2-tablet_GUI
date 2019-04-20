@@ -33,7 +33,18 @@ class GUIapp():
         self.quitButton = ttk.Button(self.note, text="Quit the program", command=quit)
 
         # tab 1 information : General Info
-        text = Label(self.tab1, text="This is Cornell Cup.", width=50)
+        info = "The original R2D2 Project focused upon creating a semi-autonomous \n " \
+               "lab assistant that could navigate and map out its surrounding \n" \
+               "environment. Since last year, the team has expanded upon R2’s ability \n " \
+               "to interact with its surroundings enabling the droid to complete tasks \n" \
+               " such as getting food from a fridge, opening a door, recognizing and \n " \
+               "greeting individual people, and even firing a nerf dart at a target. \n" \
+               "To generate excitement and interest in robotics and engineering, \n" \
+               "the team aims to advertise the R2 project and \n" \
+               "generate interest in its design process through a Kickstarter campaign. \n" \
+               "This hopefully will work toward the long-term goal of \n" \
+               "having our R2 robot appear in a Star Wars movie."
+        text = Label(self.tab1, text=info, width=60)
         text.pack(side=LEFT)
 
         # tab 2 information : Visual Img
