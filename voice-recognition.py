@@ -5,7 +5,7 @@ Cornell Cup Robotics, Spring 2019
 File Created by Yanchen Zhan '22 (yz366)
 """
 
-# import respective packages
+### import respective packages
 import sys
 #import speech_recognition as sr
 #import pyaudio
@@ -338,8 +338,6 @@ def main():
 				
 			print(sentiment_value)	
 			react_with_sound(sentiment_value)
-		
-		#writeToVoice(spoken)
 		
 		t1 = threading.Thread(target = writeToVoice, args=(spoken,))
 		t2 = threading.Thread(target = writeToSentiment, args=(sentiment_value,))
