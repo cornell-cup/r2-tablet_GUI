@@ -112,8 +112,19 @@ def play_sound(file_name):
 
 def stop():
 	print ("emergency invoked")
+	
+	#start exit procedure here
+	t0 = threading.thread(target = shutdown, args = ("",))
+	t0.start()
+	
 	react_with_sound(sleep_final)
-	sys.exit()
+	
+	t0.join()
+	
+def emergencyStop(phrase):
+	if ("stop" in phrase):
+		stop()
+		sys.exit()
 
 def wave(methodcnt): # NOTE - INSTANTIATE WITH SPECIAL CASE
 	global setup_bool
@@ -306,8 +317,7 @@ def main():
 						game("rock paper scissors")
 					"""
 		
-		else:	
-			
+		else:				
 			#sentiment analysis
 			try:				
 				global sentiment_value
