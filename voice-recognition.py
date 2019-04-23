@@ -115,18 +115,14 @@ def stop():
 	print ("emergency invoked")
 	
 	#start exit procedure here
-	t0 = threading.thread(target = shutdown, args = ("",))
-	t0.start()
+	## begin by creating threads to send poweroff commands to each arduino asynchronously (if feasible)
+	#t0 = threading.thread(target = shutdown, args = ("",))
+	#t0.start()
 	
+	#t0.join()
 	react_with_sound(sleep_final)
-	
-	t0.join()
-	
-def emergencyStop(phrase):
-	if ("stop" in phrase):
-		stop()
-		sys.exit()
-
+	sys.exit()
+		
 def wave(methodcnt): # NOTE - INSTANTIATE WITH SPECIAL CASE
 	global setup_bool
 	# initial bootup
@@ -134,7 +130,7 @@ def wave(methodcnt): # NOTE - INSTANTIATE WITH SPECIAL CASE
 		setup_bool = True
 	else:
 		print ("waving")
-		#react_with_sound(confirmation_final)
+		react_with_sound(confirmation_final)
 	return 0
 	
 def greet(methodcnt):
@@ -143,7 +139,7 @@ def greet(methodcnt):
 		setup_bool = True
 	else:
 		print ("greeting, don't forget to wave")
-		#react_with_sound(confirmation_final)
+		react_with_sound(confirmation_final)
 	return 1
 
 # have R2 take attendance
@@ -162,14 +158,29 @@ def grab_item(item, methodcnt):
 	global setup_bool
 	if (setup_bool == False or methodcnt == False):
 		setup_bool = True
+	if (item == "periscope"):
+		open_periscope()
+	elif (item == "nerf" or "gun" in item):
+		show_guns()
 	else:
 		print ("grabbing " + item)
-		#react_with_sound (confirmation_final)
+		react_with_sound (confirmation_final)
 	return 3
 	
 def spit_info():
 	print ("info spit")
+	react_with_sound (confirmation_final)
 	return 4
+
+def open_periscope():
+	print ("opening periscope")
+	react_with_sound (confirmation_final)
+	return 5
+	
+def show_guns():
+	print ("showing off dem guns..."
+	react_with_sound (confirmation_final)
+	return 6
 	
 #implement threading in here
 #locks implemented to prevent any conflict in data retrieval
@@ -218,14 +229,11 @@ def main():
 	
 	#test run to see if all r2 functionality working as expected
 	fndictGreetingsKeys = {"wave", "hello", "hi", "hey", "check", "attendance"}
-	fndictGetItemsKeys = {"water", "bottle", "stickers"}
-	#fndictGetGamesKey = {"None", "rock paper scissors"}
+	fndictGetItemsKeys = {"water", "bottle", "stickers", "periscope"} # NEED TO CHECK SPELLING OF PERISCOPE FOR VOICE RECOGNITION
 	
 	#in formation of dictionaries, all functions being called
 	fndictGreetings = {"wave":dispatcher['wave1'], "hello":dispatcher['greet1'], "hi":dispatcher['greet1'], "hey":dispatcher['greet1'], "check":dispatcher['take_attendance1'], "attendance":dispatcher['take_attendance1']}
-	fndictGetItems = {"water":dispatcher['grab_item1'], "bottle":dispatcher['grab_item1'], "stickers":dispatcher['grab_item1']}
-	#fndictGames = {"game":game("None"), "games":game("None"), "rock paper scissors":game("rock paper scissors")}
-	
+	fndictGetItems = {"water":dispatcher['grab_item1'], "bottle":dispatcher['grab_item1'], "stickers":dispatcher['grab_item1'], "periscope":dispatcher['grab_item1'], "nerf":dispatcher['grab_item1'], "guns":dispatcher['grab_item1'], "gun":dispatcher['grab_item1']}
 	methodcnt = True
 	
 	### opens microphone instance that takes speech from human to convert to text
@@ -245,7 +253,7 @@ def main():
 			react_with_sound(no_clue_final)
 		
 		elif ("r2 stop" in spoken_text):
-			write(spoken_text)
+			#write(spoken_text)
 			stop()
 		
 		elif ("hey r2" in spoken_text):
@@ -262,6 +270,7 @@ def main():
 		print("The following text was said:\n" + spoken + "\n")
 		
 		if ("r2 stop" in spoken):
+			#write(spoken_text)
 			stop()
 		
 		# R2 unsure of input
@@ -269,76 +278,67 @@ def main():
 			print ("What?")
 			react_with_sound(no_clue_final)
 		
-		#use NLTK to determine part of speech of first word spoken
-		tokens = nltk.word_tokenize (spoken)
-		tagged = nltk.pos_tag(tokens)
-		print (tagged[0])
-		
-		keywords = liteClient.getKeywords(spoken)
-		
-		#if question desired about Cornell Cup
-		if ("cup" in keywords and "cornell" in keywords or "competition" in keywords):
-			spit_info()
+		else: 
+			#use NLTK to determine part of speech of first word spoken
+			tokens = nltk.word_tokenize (spoken)
+			tagged = nltk.pos_tag(tokens)
+			print (tagged[0])
 			
-		#run through commands first
-		elif ("VB" in tagged[0]):
+			keywords = liteClient.getKeywords(spoken)
 			
-			if ("high five" in spoken):
-				keywords.append("high five")
-			
-			if "wave" in keywords:
-				wave()
-				break
+			#if question desired about Cornell Cup
+			if ("cup" in keywords and "cornell" in keywords or "competition" in keywords):
+				spit_info()
 				
-			else:
-				for x in range(0, len(keywords)):
-						
-					word = keywords[x]
-					print (word)
-						
-					react_with_sound (confirmation_final)
+			#run through commands first
+			elif ("VB" in tagged[0] or "JJ" in tagged[0]):
+				
+				if ("high five" in spoken):
+					keywords.append("high five")
+				
+				if "wave" in keywords:
+					wave()
+					break
+					
+				else:
+					for x in range(0, len(keywords)):
 							
-					if (word in fndictGreetingsKeys):	
-						print(fndictGreetings[word](methodcnt))
-						print ("in fndictGreetingKeys")
-						break
-					
-					elif (word in fndictGetItemsKeys):
-						print(fndictGetItems[word](word, methodcnt))
-						print ("in fndictGetItemsKey")
-						break
-					
-					#tell R2 to open Periscope
-					elif ("periscope" in keywords):
-						open_periscope()
-					
-					"""	
-					#tell R2 to play a game
-					elif ("rock paper scissors" in keywords or "game" in keywords):
-						game("rock paper scissors")
-					"""
-		
-		else:				
-			#sentiment analysis
-			try:				
-				global sentiment_value
-				response = naturalLanguageUnderstanding.analyze(
-				text=spoken,
-				features=Features(
-				sentiment=SentimentOptions(document=None, targets=None))).get_result()
-
-				parsed_json = json.loads(json.dumps(response, indent=2))
-				sentiment = parsed_json['sentiment']
-				document = sentiment['document']
-				score = document['score']
-				sentiment_value = float(score)
-				
-			except:
-				sentiment_value = sid().polarity_scores(spoken)['compound']
+						word = keywords[x]
+						print (word)
+							
+						react_with_sound (confirmation_final)
+								
+						if (word in fndictGreetingsKeys):	
+							print(fndictGreetings[word](methodcnt))
+							print ("in fndictGreetingKeys")
+							break
+						
+						elif (word in fndictGetItemsKeys):
+							print(fndictGetItems[word](word, methodcnt))
+							print ("in fndictGetItemsKey")
+							break
 			
+			else:				
+				#sentiment analysis
+				try:				
+					global sentiment_value
+					response = naturalLanguageUnderstanding.analyze(
+					text=spoken,
+					features=Features(
+					sentiment=SentimentOptions(document=None, targets=None))).get_result()
+
+					parsed_json = json.loads(json.dumps(response, indent=2))
+					sentiment = parsed_json['sentiment']
+					document = sentiment['document']
+					score = document['score']
+					sentiment_value = float(score)
+					
+				except:
+					sentiment_value = sid().polarity_scores(spoken)['compound']
 				
-			print(sentiment_value)	
-			react_with_sound(sentiment_value)
+					
+				print(sentiment_value)	
+				react_with_sound(sentiment_value)
 		
 		t1 = threading.Thread(target = writeToVoice, args=(spoken,))
 		t2 = threading.Thread(target = writeToSentiment, args=(sentiment_value,))
