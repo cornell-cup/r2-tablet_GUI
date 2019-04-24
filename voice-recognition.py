@@ -7,8 +7,8 @@ File Created by Yanchen Zhan '22 (yz366)
 
 ### import respective packages
 import sys
-#import speech_recognition as sr
-#import pyaudio
+import speech_recognition as sr
+import pyaudio
 import nltk
 nltk.download('vader_lexicon')
 nltk.download('punkt')
@@ -17,6 +17,9 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer as sid
 #from random import *
 import simpleaudio as sa
 import json
+import numpy as np
+from gcc_phat import gcc_phat
+import math
 #import client
 #import socket
 #import json
@@ -46,6 +49,69 @@ sleep_final = 997
 move_final = 996
 attendance_final = 995
 sentiment_value = 0
+
+
+def chunkify(arr):
+    acc_total = []
+    acc_chunk = np.zeros(8192, dtype='int16')
+    i = 0
+    for byte in arr:
+        if (i < 8192):
+            acc_chunk[i] = byte
+            i += 1
+        else:
+            acc_total.append(acc_chunk)
+            acc_chunk = np.zeros(8192, dtype='int16')
+            i = 0
+
+    return acc_total
+
+
+def get_direction(buf):
+    SOUND_SPEED = 343.2
+
+    MIC_DISTANCE_4 = 0.08127
+    MAX_TDOA_4 = MIC_DISTANCE_4 / float(SOUND_SPEED)
+
+    best_guess = None
+    MIC_GROUP_N = 2
+    MIC_GROUP = [[0, 2], [1, 3]]
+
+    tau = [0] * MIC_GROUP_N
+    theta = [0] * MIC_GROUP_N
+    for i, v in enumerate(MIC_GROUP):
+        tau[i], _ = gcc_phat(buf[v[0]::4], buf[v[1]::4], fs=16000, max_tau=MAX_TDOA_4, interp=1)
+        theta[i] = math.asin(tau[i] / MAX_TDOA_4) * 180 / math.pi
+
+        if np.abs(theta[0]) < np.abs(theta[1]):
+            if theta[1] > 0:
+                best_guess = (theta[0] + 360) % 360
+            else:
+                best_guess = (180 - theta[0])
+        else:
+            if theta[0] < 0:
+                best_guess = (theta[1] + 360) % 360
+            else:
+                best_guess = (180 - theta[1])
+
+            best_guess = (best_guess + 90 + 180) % 360
+
+
+        best_guess = (-best_guess + 120) % 360
+
+    return best_guess
+
+
+def avg_direction(chunks):
+    acc = 0
+    i = 0
+    for chunk in chunks:
+        direction = get_direction(chunk)
+        acc += direction
+        i += 1
+
+    return acc/i
+
 		
 """
 listen to user statement in mic
@@ -57,6 +123,12 @@ def listen(r, mic):
 		r.adjust_for_ambient_noise(source)
 		print("\n\n\nYou may begin talking:\n\n\n") #testing
 		audio = r.listen(source)
+		byte_data = audio.get_raw_data(16000, 2)
+		byte_arr = np.fromstring(byte_data, dtype='int16')
+		chunks = chunkify(byte_arr)
+		avg_dir = avg_direction(chunks)
+		print(int(avg_dir))
+
 
 	try:
 		return r.recognize_google(audio)
@@ -178,7 +250,7 @@ def open_periscope():
 	return 5
 	
 def show_guns():
-	print ("showing off dem guns..."
+	print ("showing off dem guns...")
 	react_with_sound (confirmation_final)
 	return 6
 	
@@ -237,14 +309,14 @@ def main():
 	methodcnt = True
 	
 	### opens microphone instance that takes speech from human to convert to text
-	#r = sr.Recognizer()
-	#mic = sr.Microphone(2)
+	r = sr.Recognizer()
+	mic = sr.Microphone(2)
 
 	# tells R2 to wake up
 	while (True):
-		spoken_text = input("enter text here: ")
-		#spoken_text = listen(r, mic)
-		#spoken_text = spoken_text.lower()
+		#spoken_text = input("enter text here: ")
+		spoken_text = listen(r, mic)
+		spoken_text = spoken_text.lower()
 		print("The following startup phrase was said:\n" + spoken_text + "\n")
 		
 		# R2 unsure of input
