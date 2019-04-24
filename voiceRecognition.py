@@ -420,6 +420,3 @@ def main():
 		t2.join()
 			
 main()
-
-#multithreading plan: add locks to prevent GUI program from accessing text file data too quickly while the text file is writing
-#create a new thread for this process
