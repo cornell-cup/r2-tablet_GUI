@@ -6,7 +6,6 @@ import time
 import imutils
 import cv2
 from imutils.video import VideoStream
-``
 
 class GUIapp():
 
