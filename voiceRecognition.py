@@ -74,8 +74,8 @@ def react_with_sound (sentiment_value):
 	
 	print ("about to play sound...")
 	
-	lead_folder = "/home/pi/r2-tablet_GUI/R2FinalSounds/"
-	#lead_folder = "/home/yanchen-zhan/Documents/Cornell-Cup/r2-voice_recognition/Final/R2FinalSounds/"
+	#lead_folder = "/home/pi/r2-tablet_GUI/R2FinalSounds/"
+	lead_folder = "/home/yanchen-zhan/Documents/Cornell-Cup/r2-voice_recognition/Final/R2FinalSounds/"
 	#lead_folder = "C:\PythonProjects\\r2-voice_recognition\Final\R2FinalSounds\\"
 	sounds = {"confirmation":"R2OK.wav" , "wake up":"R2Awake.wav" , "angry":"R2Angry.wav" , "good":"R2Good.wav" , \
 	"happy":"R2Happy.wav" , "neutral":"R2Neutral.wav" , "sad":"R2Sad.wav" , \
@@ -164,22 +164,22 @@ def grab_item(item, methodcnt):
 		show_guns()
 	else:
 		print ("grabbing " + item)
-		react_with_sound (confirmation_final)
+		#react_with_sound (confirmation_final)
 	return 3
 	
 def spit_info():
 	print ("info spit")
-	react_with_sound (confirmation_final)
+	#react_with_sound (confirmation_final)
 	return 4
 
 def open_periscope():
 	print ("opening periscope")
-	react_with_sound (confirmation_final)
+	#react_with_sound (confirmation_final)
 	return 5
 	
 def show_guns():
-	print ("showing off dem guns..."
-	react_with_sound (confirmation_final)
+	print ("showing off dem guns...")
+	#react_with_sound (confirmation_final)
 	return 6
 	
 #implement threading in here
@@ -347,7 +347,7 @@ def main():
 		t1.join()
 		t2.join()
 			
-main()
+#main()
 
 #multithreading plan: add locks to prevent GUI program from accessing text file data too quickly while the text file is writing
 #create a new thread for this process
