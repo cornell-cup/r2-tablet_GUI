@@ -289,7 +289,7 @@ def sentiment(input):
 			
 	print(sentiment_value)	
 	react_with_sound(sentiment_value)
-	return 5
+	return 7
 	
 def main():
 	
