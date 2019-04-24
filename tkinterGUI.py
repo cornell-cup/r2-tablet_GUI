@@ -162,4 +162,4 @@ class GUIapp():
                 self.panel.configure(image=image)
                 self.panel.image = image
 
-GUIapp()
+#GUIapp()
