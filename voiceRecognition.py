@@ -43,6 +43,8 @@ naturalLanguageUnderstanding = NaturalLanguageUnderstandingV1(
 version='2018-11-16',
 iam_apikey='_wxBEgRMBJ_WzXRWYzlTLYrNp3A0mmYEjKp-UQsdhvap')
 
+HeyR2File = open("HeyR2File.txt", "a+")
+
 setup_bool = False
 confirmation_final = 1000
 no_clue_final = 999
@@ -319,6 +321,9 @@ def main():
 		spoken_text = listen(r, mic)
 		spoken_text = spoken_text.lower()
 		print("The following startup phrase was said:\n" + spoken_text + "\n")
+
+		with open("HeyR2File.txt", "a") as myfile: 
+		 myfile.write(spoken_text)
 		
 		# R2 unsure of input
 		if (spoken_text == ""):
