@@ -15,18 +15,18 @@ nltk.download('averaged_perceptron_tagger')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer as sid
 #from random import *
 import simpleaudio as sa
-import json
+#import json
 #import client
-import socket
-import json
-import time
+#import socket
+#import json
+#import time
 from watson_developer_cloud import NaturalLanguageUnderstandingV1
 from watson_developer_cloud.natural_language_understanding_v1 \
     import Features, EntitiesOptions, KeywordsOptions, SentimentOptions
 import retinasdk
 #apiKey = "69ba0c10-5e17-11e9-8f72-af685da1b20e"
 #apiKey = "f09d0fe0-3223-11e9-bb65-69ed2d3c7927" #FOR DEMO DAY ONLY
-apiKey = "433793c0-6793-11e9-8f72-af685da1b20e"
+apiKey = "f8512d60-67b2-11e9-8f72-af685da1b20e"
 liteClient = retinasdk.LiteClient(apiKey)
 
 import threading
@@ -74,9 +74,9 @@ def react_with_sound (sentiment_value):
 	
 	print ("about to play sound...")
 	
-	lead_folder = "/home/pi/r2-tablet_GUI/R2FinalSounds/"
-	#lead_folder = "/home/yanchen-zhan/Documents/Cornell-Cup/r2-voice_recognition/Final/R2FinalSounds/"
-	lead_folder = "C:\PythonProjects\\r2-voice_recognition\Final\R2FinalSounds\\"
+	#lead_folder = "/home/pi/r2-tablet_GUI/R2FinalSounds/"
+	lead_folder = "/home/yanchen-zhan/Documents/Cornell-Cup/r2-voice_recognition/Final/R2FinalSounds/"
+	#lead_folder = "C:\PythonProjects\\r2-voice_recognition\Final\R2FinalSounds\\"
 	sounds = {"confirmation":"R2OK.wav" , "wake up":"R2Awake.wav" , "angry":"R2Angry.wav" , "good":"R2Good.wav" , \
 	"happy":"R2Happy.wav" , "neutral":"R2Neutral.wav" , "sad":"R2Sad.wav" , \
 	"sleep":"R2Sleep.wav", "no clue":"R2Confused.wav" , "move":"R2Move.wav" , \
@@ -217,7 +217,7 @@ def sentiment(input):
 			
 	print(sentiment_value)	
 	react_with_sound(sentiment_value)
-	return 5
+	return 7
 	
 def main():
 	
@@ -235,6 +235,7 @@ def main():
 	fndictGreetings = {"wave":dispatcher['wave1'], "hello":dispatcher['greet1'], "hi":dispatcher['greet1'], "hey":dispatcher['greet1'], "check":dispatcher['take_attendance1'], "attendance":dispatcher['take_attendance1']}
 	fndictGetItems = {"water":dispatcher['grab_item1'], "bottle":dispatcher['grab_item1'], "stickers":dispatcher['grab_item1'], "periscope":dispatcher['grab_item1'], "nerf":dispatcher['grab_item1'], "guns":dispatcher['grab_item1'], "gun":dispatcher['grab_item1']}
 	methodcnt = True
+	setup_bool = True
 	
 	### opens microphone instance that takes speech from human to convert to text
 	#r = sr.Recognizer()
@@ -284,21 +285,18 @@ def main():
 			tagged = nltk.pos_tag(tokens)
 			print (tagged[0])
 			
-			keywords = liteClient.getKeywords(spoken)
 			
+			keywords = liteClient.getKeywords(spoken)
+					
 			#if question desired about Cornell Cup
 			if ("cup" in keywords and "cornell" in keywords or "competition" in keywords):
 				spit_info()
 				
 			#run through commands first
-			elif ("VB" in tagged[0] or "JJ" in tagged[0]):
+			elif ("wave" in spoken or "high five" in spoken or "VB" in tagged[0] or "JJ" in tagged[0]):
 				
 				if ("high five" in spoken):
 					keywords.append("high five")
-				
-				if "wave" in keywords:
-					wave()
-					break
 					
 				else:
 					for x in range(0, len(keywords)):
