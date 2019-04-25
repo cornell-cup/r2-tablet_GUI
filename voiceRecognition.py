@@ -31,7 +31,8 @@ from watson_developer_cloud.natural_language_understanding_v1 \
     import Features, EntitiesOptions, KeywordsOptions, SentimentOptions
 import retinasdk
 #apiKey = "69ba0c10-5e17-11e9-8f72-af685da1b20e"
-apiKey = "f09d0fe0-3223-11e9-bb65-69ed2d3c7927" #FOR DEMO DAY ONLY
+#apiKey = "f09d0fe0-3223-11e9-bb65-69ed2d3c7927" #FOR DEMO DAY ONLY
+apiKey = "433793c0-6793-11e9-8f72-af685da1b20e"
 liteClient = retinasdk.LiteClient(apiKey)
 
 import threading
