@@ -243,7 +243,7 @@ def main():
 
 	# tells R2 to wake up
 	while (True):
-		spoken_text = input("enter text here: ")
+		spoken_text = input("enter 'hey r2' to start: ")
 		#spoken_text = listen(r, mic)
 		#spoken_text = spoken_text.lower()
 		print("The following startup phrase was said:\n" + spoken_text + "\n")
@@ -265,7 +265,7 @@ def main():
 	# R2 waits to hear what user wants - CHANGE PROMPTS HERE
 	while (True):
 		
-		spoken = input("enter text here 2: ")
+		spoken = input("enter command or sentence: ")
 		#spoken = simplify_text(listen (r, mic))
 		#spoken = spoken.lower()
 		print("The following text was said:\n" + spoken + "\n")
