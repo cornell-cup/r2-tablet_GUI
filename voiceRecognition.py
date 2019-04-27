@@ -281,7 +281,7 @@ def sentiment(input):
 		text=input,
 		features=Features(
 		sentiment=SentimentOptions(document=None, targets=None))).get_result()
-
+"nerf", "guns", "gun"
 		parsed_json = json.loads(json.dumps(response, indent=2))
 		sentiment = parsed_json['sentiment']
 		document = sentiment['document']
@@ -305,7 +305,7 @@ def main():
 	
 	#test run to see if all r2 functionality working as expected
 	fndictGreetingsKeys = {"wave", "hello", "hi", "hey", "check", "attendance"}
-	fndictGetItemsKeys = {"water", "bottle", "stickers", "periscope"} # NEED TO CHECK SPELLING OF PERISCOPE FOR VOICE RECOGNITION
+	fndictGetItemsKeys = {"water", "bottle", "stickers", "periscope", "nerf", "guns", "gun"} # NEED TO CHECK SPELLING OF PERISCOPE FOR VOICE RECOGNITION
 	
 	#in formation of dictionaries, all functions being called
 	fndictGreetings = {"wave":dispatcher['wave1'], "hello":dispatcher['greet1'], "hi":dispatcher['greet1'], "hey":dispatcher['greet1'], "check":dispatcher['take_attendance1'], "attendance":dispatcher['take_attendance1']}
