@@ -210,26 +210,25 @@ def wave(methodcnt): # NOTE - INSTANTIATE WITH SPECIAL CASE
 	return 0
 	
 def greet(methodcnt):
-	global setup_bool
+	"""global setup_bool
 	if (setup_bool == False or methodcnt == False):
 		setup_bool = True
-	else:
+	else:"""
 		print ("greeting, don't forget to wave")
 		react_with_sound(confirmation_final)
 	return 1
 
 # have R2 take attendance
 def take_attendance(methodcnt):
-	global setup_bool
+	"""global setup_bool
 	if (setup_bool == False or methodcnt == False):
 		print ("in if statement")
 		setup_bool = True
-	else:
-		print ("checking in - F.R.")
-		react_wifth_sound(attendance_final)
-		client.main()	
+	else:"""
+	print ("checking in - F.R.")
+	react_with_sound(attendance_final)
+	client.CheckIn()	
 	return 2
-		
 def grab_item(item, methodcnt):
 	global setup_bool
 	if (setup_bool == False or methodcnt == False):

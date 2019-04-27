@@ -15,11 +15,10 @@ nltk.download('averaged_perceptron_tagger')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer as sid
 #from random import *
 import simpleaudio as sa
-#import json
-#import client
-#import socket
-#import json
-#import time
+import client
+import socket
+import json
+import time
 from watson_developer_cloud import NaturalLanguageUnderstandingV1
 from watson_developer_cloud.natural_language_understanding_v1 \
     import Features, EntitiesOptions, KeywordsOptions, SentimentOptions
@@ -152,7 +151,7 @@ def take_attendance(methodcnt):
 	else:"""
 	print ("checking in - F.R.")
 	react_with_sound(attendance_final)
-	client.main()	
+	client.CheckIn()	
 	return 2
 		
 def grab_item(item, methodcnt):
