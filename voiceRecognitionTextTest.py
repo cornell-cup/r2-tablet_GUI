@@ -145,14 +145,14 @@ def greet(methodcnt):
 
 # have R2 take attendance
 def take_attendance(methodcnt):
-	global setup_bool
+	"""global setup_bool
 	if (setup_bool == False or methodcnt == False):
 		print ("in if statement")
 		setup_bool = True
-	else:
-		print ("checking in - F.R.")
-		react_with_sound(attendance_final)
-		client.main()	
+	else:"""
+	print ("checking in - F.R.")
+	react_with_sound(attendance_final)
+	client.main()	
 	return 2
 		
 def grab_item(item, methodcnt):
