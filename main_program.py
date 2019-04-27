@@ -8,12 +8,12 @@ class main_program():
 		voice_thread = threading.Thread(target = voiceRecognition.main, args = "")
 		gui_thread = threading.Thread(target = tkinterGUI.GUIapp, args = "")
 		
-		print ("stahting")
+		#print ("stahting")
 		voice_thread.start()
-		print ("between statements")
+		#print ("between statements")
 		gui_thread.start()
 		
-		print ("in between")
+		#print ("in between")
 		
 		#voice_thread.join()
 		#print ("ending statements")

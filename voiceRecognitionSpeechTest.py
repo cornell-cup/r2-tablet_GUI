@@ -225,7 +225,7 @@ def take_attendance(methodcnt):
 	else:"""
 	print ("checking in - F.R.")
 	react_with_sound(attendance_final)
-	client.main()	
+	client.CheckIn()	
 	return 2
 		
 def grab_item(item, methodcnt):
