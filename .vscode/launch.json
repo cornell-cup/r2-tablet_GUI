@@ -1,0 +1,16 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - HeyR2Filewords",
+      "request": "launch",
+      "mainClass": "HeyR2Filewords"
+    },
+    {
+      "type": "java",
+      "name": "CodeLens (Launch) - Bose",
+      "request": "launch",
+      "mainClass": "Bose"
+    }
+  ]
+}
