@@ -281,7 +281,6 @@ def sentiment(input):
 		text=input,
 		features=Features(
 		sentiment=SentimentOptions(document=None, targets=None))).get_result()
-"nerf", "guns", "gun"
 		parsed_json = json.loads(json.dumps(response, indent=2))
 		sentiment = parsed_json['sentiment']
 		document = sentiment['document']
@@ -314,7 +313,7 @@ def main():
 	
 	### opens microphone instance that takes speech from human to convert to text
 	r = sr.Recognizer()
-	mic = sr.Microphone(3)
+	mic = sr.Microphone(2)
 
 	# tells R2 to wake up
 	while (True):
