@@ -314,7 +314,7 @@ def main():
 	
 	### opens microphone instance that takes speech from human to convert to text
 	r = sr.Recognizer()
-	mic = sr.Microphone(2)
+	mic = sr.Microphone(3)
 
 	# tells R2 to wake up
 	while (True):
