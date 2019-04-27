@@ -338,7 +338,7 @@ def main():
 		elif ("hey r2" in spoken_text):
 			print ("awake")
 			react_with_sound(wakeup_final)
-			break			
+			#break			
 	
 	# R2 waits to hear what user wants - CHANGE PROMPTS HERE
 	while (True):
