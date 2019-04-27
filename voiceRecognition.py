@@ -324,7 +324,7 @@ def main():
 		print("The following startup phrase was said:\n" + spoken_text + "\n")
 
 		with open("HeyR2File.txt", "a") as myfile: 
-		 myfile.write(spoken_text)
+		 myfile.write(spoken_text + ",")
 		
 		# R2 unsure of input
 		if (spoken_text == ""):
