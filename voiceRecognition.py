@@ -110,14 +110,36 @@ def get_direction(buf):
 def avg_direction(chunks):
     acc = 0
     i = 0
+    dir_chunks = []
     for chunk in chunks:
         direction = get_direction(chunk)
-        print(direction)
         acc += direction
         i += 1
+        dir_chunks.append(direction)
 
-    return acc/i
+    return (acc/i, dir_chunks)
 
+def remove_outliers(directions, avg_dir):
+    res = []
+    for direction in directions:
+        if (abs(direction - avg_dir) <= 50):
+            res.append(direction)
+
+    return res
+
+def avg_list(lst):
+    acc = 0
+    i = 0
+
+    if (lst == []):
+        return 0
+
+    else:
+        for elt in lst:
+            acc += lst
+            i += 1
+
+        return acc/i
 		
 """
 listen to user statement in mic
@@ -132,8 +154,15 @@ def listen(r, mic):
 		byte_data = audio.get_raw_data(16000, 2)
 		byte_arr = np.fromstring(byte_data, dtype='int16')
 		chunks = chunkify(byte_arr)
-		avg_dir = avg_direction(chunks)
+		tup = avg_direction(chunks)
+		avg_dir = tup[0]
 		print(int(avg_dir))
+		directions = remove_outliers(tup[1], avg_dir)
+
+		if (not(directions == [])):
+		    print(int(avg_list(directions)))
+		else:
+		    print(int(avg_dir))
 
 
 	try:
