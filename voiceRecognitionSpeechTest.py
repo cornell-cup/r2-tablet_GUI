@@ -198,40 +198,40 @@ def stop():
 	sys.exit()
 		
 def wave(methodcnt): # NOTE - INSTANTIATE WITH SPECIAL CASE
-	global setup_bool
+	"""global setup_bool
 	# initial bootup
 	if (setup_bool == False or methodcnt == False):
 		setup_bool = True
-	else:
-		print ("waving")
-		react_with_sound(confirmation_final)
+	else:"""
+	print ("waving")
+	#react_with_sound(confirmation_final)
 	return 0
 	
 def greet(methodcnt):
-	global setup_bool
+	"""global setup_bool
 	if (setup_bool == False or methodcnt == False):
 		setup_bool = True
-	else:
-		print ("greeting, don't forget to wave")
-		react_with_sound(confirmation_final)
+	else:"""
+	print ("greeting, don't forget to wave")
+	#react_with_sound(confirmation_final)
 	return 1
 
 # have R2 take attendance
 def take_attendance(methodcnt):
-	global setup_bool
+	"""global setup_bool
 	if (setup_bool == False or methodcnt == False):
 		print ("in if statement")
 		setup_bool = True
-	else:
-		print ("checking in - F.R.")
-		react_wifth_sound(attendance_final)
-		client.main()	
+	else:"""
+	print ("checking in - F.R.")
+	react_with_sound(attendance_final)
+	client.main()	
 	return 2
 		
 def grab_item(item, methodcnt):
-	global setup_bool
+	"""global setup_bool
 	if (setup_bool == False or methodcnt == False):
-		setup_bool = True
+		setup_bool = True"""
 	if (item == "periscope"):
 		open_periscope()
 	elif (item == "nerf" or "gun" in item):
@@ -312,7 +312,7 @@ def main():
 	
 	### opens microphone instance that takes speech from human to convert to text
 	r = sr.Recognizer()
-	mic = sr.Microphone(2)
+	mic = sr.Microphone(3) #qwerty
 
 	# tells R2 to wake up
 	while (True):
@@ -338,9 +338,9 @@ def main():
 	# R2 waits to hear what user wants - CHANGE PROMPTS HERE
 	while (True):
 		
-		spoken = input("enter text here 2: ")
-		#spoken = simplify_text(listen (r, mic))
-		#spoken = spoken.lower()
+		#spoken = input("enter text here 2: ")
+		spoken = listen (r, mic)
+		spoken = spoken.lower()
 		print("The following text was said:\n" + spoken + "\n")
 		
 		if ("r2 stop" in spoken):
@@ -358,21 +358,18 @@ def main():
 			tagged = nltk.pos_tag(tokens)
 			print (tagged[0])
 			
-			keywords = liteClient.getKeywords(spoken)
 			
+			keywords = liteClient.getKeywords(spoken)
+					
 			#if question desired about Cornell Cup
 			if ("cup" in keywords and "cornell" in keywords or "competition" in keywords):
 				spit_info()
 				
 			#run through commands first
-			elif ("VB" in tagged[0] or "JJ" in tagged[0]):
+			elif ("wave" in spoken or "high five" in spoken or "VB" in tagged[0] or "JJ" in tagged[0]):
 				
 				if ("high five" in spoken):
 					keywords.append("high five")
-				
-				if "wave" in keywords:
-					wave()
-					break
 					
 				else:
 					for x in range(0, len(keywords)):
@@ -421,4 +418,4 @@ def main():
 		t1.join()
 		t2.join()
 			
-#main()
+main()
