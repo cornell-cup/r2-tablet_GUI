@@ -75,23 +75,23 @@ class GUIapp():
         c2 = Label(self.tab3, text="Sentiment Analysis Output", font=("Helvetica", 15,"bold"))
         c3 = Label(self.tab3, text="Facial Recognition Photo", font=("Helvetica", 15,"bold"))
         c4 = Label(self.tab3, text="Facial Recognition Result", font=("Helvetica", 15,"bold"))
-        c5 = Label(self.tab3, text="Object Detection Result", font=("Helvetica", 15,"bold"))
+        #c5 = Label(self.tab3, text="Object Detection Result", font=("Helvetica", 15,"bold"))
         self.data1 = Label(self.tab3, text="", font=("Courier", 14))
         self.data2 = Label(self.tab3, text="", font=("Courier", 14))
         self.data3 = Label(self.tab3, image=Facial_Recognition_Photo_img)
         self.data4 = Label(self.tab3, text="", font=("Courier", 14))
-        self.data5 = Label(self.tab3, text="", font=("Courier", 14))
+        #self.data5 = Label(self.tab3, text="", font=("Courier", 14))
 
         c1.grid(row=0, column=0, padx=5, pady=5)
         c2.grid(row=0, column=1, padx=5, pady=5)
         c3.grid(row=2, column=0, padx=5, pady=5)
         c4.grid(row=2, column=1, padx=5, pady=5)
-        c5.grid(row=4, column=0, padx=5, pady=5, rowspan=1)
+        #c5.grid(row=4, column=0, padx=5, pady=5, rowspan=1)
         self.data1.grid(row=1, column=0, padx=5, pady=5)
         self.data2.grid(row=1, column=1, padx=5, pady=5)
         self.data3.grid(row=3, column=0, padx=5, pady=5)
         self.data4.grid(row=3, column=1, padx=5, pady=5)
-        self.data5.grid(row=5, column=0, padx=5, pady=5, rowspan=1)
+        #self.data5.grid(row=5, column=0, padx=5, pady=5, rowspan=1)
 
         # tab 4 information : Sign up
         self.text = Label(self.tab4, text="Enter your Email here: ", font=("Helvetica", 18 ,"bold"))
@@ -122,11 +122,11 @@ class GUIapp():
             VoiceRecognitionText = open('VoiceRecognitionText.txt', 'r').read()
             SentimentAnalysisOutput = open('SentimentAnalysisOutput.txt', 'r').read()
             FacialRecognitionResult = open('FacialRecognitionResult.txt', 'r').read()
-            ObjectDetectionResult = open('ObjectDetectionResult.txt', 'r').read()
+            #ObjectDetectionResult = open('ObjectDetectionResult.txt', 'r').read()
             self.data1['text'] = VoiceRecognitionText
             self.data2['text'] = SentimentAnalysisOutput
             self.data4['text'] = FacialRecognitionResult
-            self.data5['text'] = ObjectDetectionResult
+            #self.data5['text'] = ObjectDetectionResult
 
             Facial_Recognition_Photo_path = "cropped.jpg"
             img = Image.open(Facial_Recognition_Photo_path)
