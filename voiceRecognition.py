@@ -54,7 +54,7 @@ sleep_final = 997
 move_final = 996
 attendance_final = 995
 sentiment_value = 0
-
+device_index = 2
 
 def chunkify(arr):
     acc_total = []
@@ -341,7 +341,7 @@ def main():
 	
 	### opens microphone instance that takes speech from human to convert to text
 	r = sr.Recognizer()
-	mic = sr.Microphone(2)
+	mic = sr.Microphone(device_index)
 
 	# tells R2 to wake up
 	while (True):
