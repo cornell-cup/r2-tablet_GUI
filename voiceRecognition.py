@@ -112,6 +112,7 @@ def avg_direction(chunks):
     i = 0
     for chunk in chunks:
         direction = get_direction(chunk)
+        print(direction)
         acc += direction
         i += 1
 
