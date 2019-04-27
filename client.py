@@ -10,12 +10,12 @@ import sys
 import io
 import socket
 import picamera
-import face_recognition
+#import face_recognition
 from PIL import Image
 from num2words import num2words
 from subprocess import call
 import subprocess
-import robot_control
+#import robot_control
 
 # find largest face in the image
 # return None if no face is found or the face is too small
@@ -38,7 +38,7 @@ def find_face(image):
 
     return None
 
-url = "http://10.129.2.193:11000/identify-face"
+url = "http://10.129.19.162:11000/identify-face"
 
 def send_test_image():
     files = {
@@ -59,10 +59,7 @@ def JsonLoad(CheckInData):
 
 #speak the check in result using
 def speakResult(person, checkInStatus, meetingType):
-    print(person)
-    if person == 'None':
-        text = 'No such a person'
-    if person == None:
+    if person == 'None' or person == None:
         text = 'No such a person and person is none'
     else:
         text = person + 'successfully check in'
@@ -94,16 +91,15 @@ def DetectFace():
                 face_image = image[top:bottom, left:right]
                 pil_image = Image.fromarray(face_image)
                 pil_image.save('cropped.png', 'PNG')
-                print("cropped")
                 return True
         else:
             # shake head and say i cannot find you
             failure_tries += 1
     return False
 
-def writeResultToFile(json_feedback):
-    with open('facial_recognition_result.txt', 'wb') as f:
-        f.write(json_feedback + '\n')
+def writeResultToFile(text):
+    with open('FacialRecognitionResult.txt', 'w') as f:
+        f.write(text)
 
 def CheckIn():
     # detected a valid face
@@ -112,11 +108,18 @@ def CheckIn():
         json_feedback = send_test_image()
         person, checkInStatus, meetingType = JsonLoad(json_feedback)
         print(person, checkInStatus, meetingType)
-        # speakResult(person, checkInStatus, meetingType)
-        writeResultToFile(json_feedback)
-
+        speakResult(person, checkInStatus, meetingType)
+        
+        text = ''
+        text += 'person: ' + person + '\n'
+        text += 'checkInStatus: ' + str(checkInStatus) + '\n'
+        text += 'meetingType: ' + str(meetingType)
+        writeResultToFile(text)
+        
     else:
         print("cannot detect a valid face")
+        subprocess.check_output(['espeak','-ven-us', 'I cannot see your face'])
+
 
 # name should be the parameter to be passed in
 def MakeFriend(name):
@@ -125,8 +128,9 @@ def MakeFriend(name):
         print("detected a valid face")
         # json_feedback = send_test_image()
         # TODO to send a new image along with name
-
+        
     else:
         print("cannot detect a valid face")
 
-# CheckIn()
+#CheckIn()
+        

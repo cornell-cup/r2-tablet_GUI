@@ -128,7 +128,7 @@ class GUIapp():
             self.data4['text'] = FacialRecognitionResult
             #self.data5['text'] = ObjectDetectionResult
 
-            Facial_Recognition_Photo_path = "cropped.jpg"
+            Facial_Recognition_Photo_path = "cropped.png"
             img = Image.open(Facial_Recognition_Photo_path)
             img = img.resize((180, 180), Image.ANTIALIAS)
             Facial_Recognition_Photo_img = ImageTk.PhotoImage(img)
