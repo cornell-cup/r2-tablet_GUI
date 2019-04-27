@@ -124,21 +124,22 @@ def stop():
 	sys.exit()
 		
 def wave(methodcnt): # NOTE - INSTANTIATE WITH SPECIAL CASE
-	global setup_bool
+	"""global setup_bool
 	# initial bootup
 	if (setup_bool == False or methodcnt == False):
 		setup_bool = True
-	else:
-		print ("waving")
+	else:"""
+	print ("waving")
 	#	react_with_sound(confirmation_final)
 	return 0
 	
 def greet(methodcnt):
-	global setup_bool
+	"""global setup_bool
 	if (setup_bool == False or methodcnt == False):
 		setup_bool = True
-	else:
-		print ("greeting, don't forget to wave")
+	else:"""
+	print ("greeting, don't forget to wave")
+	wave(methodcnt)
 	#	react_with_sound(confirmation_final)
 	return 1
 
@@ -155,9 +156,9 @@ def take_attendance(methodcnt):
 	return 2
 		
 def grab_item(item, methodcnt):
-	global setup_bool
+	"""global setup_bool
 	if (setup_bool == False or methodcnt == False):
-		setup_bool = True
+		setup_bool = True"""
 	if (item == "periscope"):
 		open_periscope()
 	elif (item == "nerf" or "gun" in item):
