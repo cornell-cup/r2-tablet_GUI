@@ -83,10 +83,10 @@ def DetectFace():
             if face_center > image_y * 0.2 and face_center < image_y * 0.8:
                 # crop image
 
-                top = top - min(50, bottom)
-                bottom = bottom + min(50, image_x - top)
-                left = left - min(50, left)
-                right = right + min(50, image_y - right)
+                top = top - min(100, bottom)
+                bottom = bottom + min(100, image_x - top)
+                left = left - min(100, left)
+                right = right + min(100, image_y - right)
 
                 face_image = image[top:bottom, left:right]
                 pil_image = Image.fromarray(face_image)
