@@ -2,6 +2,8 @@
 This is the final code structure for the R2D2 project
 Cornell Cup Robotics, Spring 2019
 
+Speech Test
+
 File Created by Yanchen Zhan '22 (yz366)
 """
 
@@ -32,7 +34,7 @@ from watson_developer_cloud.natural_language_understanding_v1 \
 import retinasdk
 #apiKey = "69ba0c10-5e17-11e9-8f72-af685da1b20e"
 #apiKey = "f09d0fe0-3223-11e9-bb65-69ed2d3c7927" #FOR DEMO DAY ONLY
-apiKey = "433793c0-6793-11e9-8f72-af685da1b20e"
+apiKey = "f8512d60-67b2-11e9-8f72-af685da1b20e"
 liteClient = retinasdk.LiteClient(apiKey)
 
 import threading
@@ -213,6 +215,7 @@ def greet(methodcnt):
 		setup_bool = True
 	else:"""
 	print ("greeting, don't forget to wave")
+	wave(methodcnt)
 	#react_with_sound(confirmation_final)
 	return 1
 
@@ -309,6 +312,7 @@ def main():
 	fndictGreetings = {"wave":dispatcher['wave1'], "hello":dispatcher['greet1'], "hi":dispatcher['greet1'], "hey":dispatcher['greet1'], "check":dispatcher['take_attendance1'], "attendance":dispatcher['take_attendance1']}
 	fndictGetItems = {"water":dispatcher['grab_item1'], "bottle":dispatcher['grab_item1'], "stickers":dispatcher['grab_item1'], "periscope":dispatcher['grab_item1'], "nerf":dispatcher['grab_item1'], "guns":dispatcher['grab_item1'], "gun":dispatcher['grab_item1']}
 	methodcnt = True
+	setup_bool = True
 	
 	### opens microphone instance that takes speech from human to convert to text
 	r = sr.Recognizer()
