@@ -22,7 +22,7 @@ import socket
 import client
 import wave
 import math
-import phase_test as pt
+import phase_test
 from gcc_phat import gcc_phat
 import numpy as np
 import json
@@ -165,7 +165,7 @@ def dir_from_wav(audio):
 
 	while True:
 		data = read_file.readframes(N)
-		if (len(data) != multi.getsampwidth() * N * channels):
+		if (len(data) != 2 * N * channels):
 				break
 
 		data = np.frombuffer(data, dtype='int16')
@@ -173,10 +173,14 @@ def dir_from_wav(audio):
 		tau = [0] * 2
 		theta = [0] * 2
 		i = 0
+		SOUND_SPEED = 343.2
+
+    MIC_DISTANCE_4 = 0.08127
+    MAX_TDOA_4 = MIC_DISTANCE_4 / float(SOUND_SPEED)
 
 		for ch in range(1, channels):
 			sig_buf = data[ch::channels]
-			tau[i], _ = pt.gcc_phat(sig_buf * window, ref_buf * window,fs=1, max_tau=max_offset, interp=interp)
+			tau[i], _ = phase_test.gcc_phat(sig_buf * window, ref_buf * window,fs=1, max_tau=max_offset, interp=interp)
 			theta[i] = math.asin(tau[i] / MAX_TDOA_4) * 180 / math.pi
 			i += 1
 
