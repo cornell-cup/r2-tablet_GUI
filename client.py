@@ -136,5 +136,3 @@ def MakeFriend(name):
         print("cannot detect a valid face")
 
 #CheckIn()
-# subprocess.check_output(['espeak','-ven-us', 'I cannot see your face'])
-        
