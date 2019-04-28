@@ -16,7 +16,7 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer as sid
 #from random import *
 import simpleaudio as sa
 import piimages_final
-#import client
+import client
 import socket
 import json
 import time
@@ -291,6 +291,9 @@ def main():
 
 		elif ("what do you see" in spoken):
 			object_detection()
+        
+        elif ("make friends" in spoken):
+            make_friends("My name is Rong")
 
 		else: 
 			#use NLTK to determine part of speech of first word spoken
