@@ -338,6 +338,7 @@ def main():
 	fndictGreetings = {"wave":dispatcher['wave1'], "hello":dispatcher['greet1'], "hi":dispatcher['greet1'], "hey":dispatcher['greet1'], "check":dispatcher['take_attendance1'], "attendance":dispatcher['take_attendance1']}
 	fndictGetItems = {"water":dispatcher['grab_item1'], "bottle":dispatcher['grab_item1'], "stickers":dispatcher['grab_item1'], "periscope":dispatcher['grab_item1'], "nerf":dispatcher['grab_item1'], "guns":dispatcher['grab_item1'], "gun":dispatcher['grab_item1']}
 	methodcnt = True
+	heyr2 = {"ar2","or to blue","hey arthur","ai2","they are two","ko2","halo 2","naruto","ar jail","ar-10","airtel","rdr2 hello","q38","hey r2","yo are two","zr2","you are two","hey or two"}
 	### opens microphone instance that takes speech from human to convert to text
 	r = sr.Recognizer()
 	mic = sr.Microphone(device_index)
@@ -362,6 +363,11 @@ def main():
 			#write(spoken_text)
 			stop()
 		
+		elif (spoken_text in heyr2):
+			print ("awake")
+			react_with_sound(wakeup_final)
+			#break
+			
 		elif ("hey r2" in spoken_text):
 			print ("awake")
 			react_with_sound(wakeup_final)
