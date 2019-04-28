@@ -54,7 +54,7 @@ sleep_final = 997
 move_final = 996
 attendance_final = 995
 sentiment_value = 0
-device_index = 2
+device_index = 1
 
 def chunkify(arr):
     acc_total = []
