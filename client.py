@@ -10,7 +10,7 @@ import sys
 import io
 import socket
 import picamera
-#import face_recognition
+import face_recognition
 from PIL import Image
 from num2words import num2words
 from subprocess import call
@@ -94,6 +94,7 @@ def DetectFace():
                 return True
         else:
             # shake head and say i cannot find you
+            subprocess.check_output(['espeak','-ven-us', 'I cannot find your face'])
             failure_tries += 1
     return False
 
@@ -104,6 +105,8 @@ def writeResultToFile(text):
 def CheckIn():
     # detected a valid face
     if DetectFace():
+        subprocess.check_output(['espeak','-ven-us', 'I saw your face'])
+
         print("detected a valid face")
         json_feedback = send_test_image()
         person, checkInStatus, meetingType = JsonLoad(json_feedback)
@@ -133,4 +136,5 @@ def MakeFriend(name):
         print("cannot detect a valid face")
 
 #CheckIn()
+# subprocess.check_output(['espeak','-ven-us', 'I cannot see your face'])
         

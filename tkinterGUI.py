@@ -66,7 +66,7 @@ class GUIapp():
         video_thread.start()
 
         # tab 3 information : Data Streaming
-        Facial_Recognition_Photo_path = "cropped.jpg"
+        Facial_Recognition_Photo_path = "cropped.png"
         img = Image.open(Facial_Recognition_Photo_path)
         img = img.resize((180, 180), Image.ANTIALIAS)
         Facial_Recognition_Photo_img = ImageTk.PhotoImage(img)
@@ -162,4 +162,4 @@ class GUIapp():
                 self.panel.configure(image=image)
                 self.panel.image = image
 
-#GUIapp()
+GUIapp()
