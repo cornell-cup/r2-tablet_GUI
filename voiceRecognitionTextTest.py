@@ -15,7 +15,7 @@ nltk.download('averaged_perceptron_tagger')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer as sid
 #from random import *
 import simpleaudio as sa
-#import piimages_final
+import piimages_final
 #import client
 import socket
 import json
@@ -155,10 +155,10 @@ def take_attendance(methodcnt):
 	client.CheckIn()	
 	return 2
 
-#def make_friends(in):
-#    friend = in[len("my name is ")+1:] #index where the first name appears
-#    client.MakeFriends(friend)
-#    return 9
+def make_friends(name):
+    friend = name[len("my name is ")+1:] #index where the first name appears
+    client.MakeFriends(friend)
+    return 9
 
 def grab_item(item, methodcnt):
 	"""global setup_bool
@@ -288,6 +288,9 @@ def main():
 		elif (spoken == ""):
 			print ("What?")
 			react_with_sound(no_clue_final)
+		
+		elif ("what do you see" in spoken):
+			object_detection()
 		
 		else: 
 			#use NLTK to determine part of speech of first word spoken
