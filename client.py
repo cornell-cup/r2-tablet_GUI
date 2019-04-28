@@ -38,13 +38,13 @@ def find_face(image):
 
     return None
 
-url = "http://10.129.19.162:11000/identify-face"
+url = "http://10.129.19.162:11000/"
 
 def send_test_image():
     files = {
         "image": open("cropped.png", "rb")
     }
-    response = requests.post(url, files=files, verify=False)
+    response = requests.post(url + "identify-face", files=files, verify=False)
     return response.json()
 
 #get the check in result from the json and return the reuslt
@@ -80,7 +80,7 @@ def DetectFace():
             # check if the face is within the middle 20% of the image
             face_center = (right + left) / 2
             image_x, image_y, d = image.shape
-            if face_center > image_y * 0.3 and face_center < image_y * 0.7:
+            if face_center > image_y * 0.2 and face_center < image_y * 0.8:
                 # crop image
 
                 top = top - min(50, bottom)
@@ -94,7 +94,7 @@ def DetectFace():
                 return True
         else:
             # shake head and say i cannot find you
-            subprocess.check_output(['espeak','-ven-us', 'I cannot find your face'])
+            subprocess.check_output(['espeak','-ven-us', 'I cannot see your face'])
             failure_tries += 1
     return False
 
@@ -129,10 +129,28 @@ def MakeFriend(name):
 
     if DetectFace():
         print("detected a valid face")
-        # json_feedback = send_test_image()
+        files = {
+            "image": open("cropped.png", "rb")
+        }
+        body = {
+            "name": name
+        }
+        response = requests.post(url + "save-face", files=files, body=body, verify=False)
+
+        if response.status_code == 422:
+            print('Face exists')
+            text = 'I already know you'
+        elif response.status_code == 200:
+            print('Add friend successful')
+            text = 'I added you as' + name
+        else:
+            print('I cannot add you as friend')
+            text = 'I cannot add you as friend'
+        writeResultToFile(text)
         # TODO to send a new image along with name
         
     else:
         print("cannot detect a valid face")
+        subprocess.check_output(['espeak','-ven-us', 'I cannot see your face'])
 
 #CheckIn()
