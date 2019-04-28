@@ -4,11 +4,7 @@ from PIL import Image
 import picamera
 import time
 import sys
-<<<<<<< HEAD
 ip = "192.168.4.102"
-=======
-ip = 192.168.4.102
->>>>>>> 2b937930ee8f0cb65957aa4db7202a29677a55a9
 portnum = 5000
 option = 1
 def main():
@@ -61,8 +57,3 @@ def main():
             
     s1.close()
     time.sleep(.001)
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 2b937930ee8f0cb65957aa4db7202a29677a55a9
