@@ -2,7 +2,7 @@ import serial
 import time
 
 ser_nerf = serial.Serial('/dev/nerfgun', 9600)
-commands = ["M2D130E", "M1D130E", "M2D80E", "M1D180E", "M7D0E"] 
+commands = ["M1D10E", "M1D-10E", "M2D10E", "M2D-10E", "M7D0E"] 
 init = ["M3D1E", "M3D2E", "M4D1E", "M4D2E"] #move nerf gun outward, inward, lens aperture open, close
 
 def run_nerf_gun():
