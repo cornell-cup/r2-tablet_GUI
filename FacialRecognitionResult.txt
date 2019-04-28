@@ -1,3 +1,1 @@
-person: Rong
-checkInStatus: 1
-meetingType: 1
+I added you asRong

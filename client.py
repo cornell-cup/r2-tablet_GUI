@@ -132,17 +132,17 @@ def MakeFriend(name):
         files = {
             "image": open("cropped.png", "rb")
         }
-        body = {
+        data = {
             "name": name
         }
-        response = requests.post(url + "save-face", files=files, body=body, verify=False)
+        response = requests.post(url + "save-face", files=files, data=data, verify=False)
 
         if response.status_code == 422:
             print('Face exists')
             text = 'I already know you'
         elif response.status_code == 200:
             print('Add friend successful')
-            text = 'I added you as' + name
+            text = 'I added you as ' + name
         else:
             print('I cannot add you as friend')
             text = 'I cannot add you as friend'

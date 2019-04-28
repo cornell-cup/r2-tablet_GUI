@@ -156,8 +156,8 @@ def take_attendance(methodcnt):
 	return 2
 
 def make_friends(name):
-    friend = name[len("my name is ")+1:] #index where the first name appears
-    client.MakeFriends(friend)
+    friend = name[len("my name is "):] #index where the first name appears
+    client.MakeFriend(friend)
     return 9
 
 def grab_item(item, methodcnt):
