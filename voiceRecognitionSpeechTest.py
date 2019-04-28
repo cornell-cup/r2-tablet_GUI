@@ -177,6 +177,7 @@ def dir_from_wav(audio):
 
     MIC_DISTANCE_4 = 0.08127
     MAX_TDOA_4 = MIC_DISTANCE_4 / float(SOUND_SPEED)
+		best_guess = None
 
 		for ch in range(1, channels):
 			sig_buf = data[ch::channels]
