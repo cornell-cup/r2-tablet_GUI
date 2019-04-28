@@ -36,7 +36,7 @@ def showIf(boolean, ifTrue, ifFalse=" "):
 
 
 
-sys.path.insert(0, "../../../protocol/reference")
+sys.path.insert(0, "protocol/reference")
 import R2Protocol2 as R2Protocol
 
 #TCP_IP = '0.0.0.0'
