@@ -155,9 +155,10 @@ def take_attendance(methodcnt):
 	client.CheckIn()	
 	return 2
 
-def make_friends(in):
-    friend = in[len("my name is ")+1:] #index where the first name appears
-    client.MakeFriends(friend)
+#def make_friends(in):
+#    friend = in[len("my name is ")+1:] #index where the first name appears
+#    client.MakeFriends(friend)
+#    return 9
 
 def grab_item(item, methodcnt):
 	"""global setup_bool
