@@ -10,7 +10,7 @@ public class HeyR2Filewords {
       set.add(s);
     System.out.print("[");
     for (String s : set)
-      System.out.print(s + ",");
+      System.out.print("\"" + s + "\"" + ",");
     System.out.print("]");
   }
 }
