@@ -342,6 +342,7 @@ def main():
 	### opens microphone instance that takes speech from human to convert to text
 	r = sr.Recognizer()
 	mic = sr.Microphone(device_index)
+	r.dynamic_energy_threshold = True
 
 	# tells R2 to wake up
 	while (True):
