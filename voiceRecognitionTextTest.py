@@ -65,7 +65,6 @@ def listen(r, mic):
 		print ("What are you saying?") #testing
 		return ""
 
-
 """
 plays respective sound from speakers
 based on sentiment analysis value
@@ -122,6 +121,10 @@ def stop():
 	#t0.join()
 	react_with_sound(sleep_final)
 	sys.exit()
+
+def move():
+	print (moving)
+	return 999
 
 def wave(methodcnt): # NOTE - INSTANTIATE WITH SPECIAL CASE
 	"""global setup_bool
