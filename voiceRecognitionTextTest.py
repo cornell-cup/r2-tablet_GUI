@@ -20,6 +20,9 @@ import client
 import socket
 import json
 import time
+import nerf
+import locomotion
+import precisearm
 from watson_developer_cloud import NaturalLanguageUnderstandingV1
 from watson_developer_cloud.natural_language_understanding_v1 \
     import Features, EntitiesOptions, KeywordsOptions, SentimentOptions
