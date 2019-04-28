@@ -292,8 +292,8 @@ def main():
 		elif ("what do you see" in spoken):
 			object_detection()
         
-        elif ("make friends" in spoken):
-            make_friends("My name is Rong")
+		elif ("make friends" in spoken):
+			make_friends("My name is Rong")
 
 		else: 
 			#use NLTK to determine part of speech of first word spoken
