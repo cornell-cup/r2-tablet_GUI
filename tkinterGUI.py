@@ -70,28 +70,33 @@ class GUIapp():
         img = Image.open(Facial_Recognition_Photo_path)
         img = img.resize((180, 180), Image.ANTIALIAS)
         Facial_Recognition_Photo_img = ImageTk.PhotoImage(img)
+        
+        Object_Detection_Photo_path = "backimage.png"
+        img2 = Image.open(Object_Detection_Photo_path)
+        img2 = img2.resize((320, 180), Image.ANTIALIAS)
+        Object_Detection_Photo_img = ImageTk.PhotoImage(img2)
 
-        c1 = Label(self.tab3, text="Voice Recognition Text", font=("Helvetica", 15,"bold"))
-        c2 = Label(self.tab3, text="Sentiment Analysis Output", font=("Helvetica", 15,"bold"))
-        c3 = Label(self.tab3, text="Facial Recognition Photo", font=("Helvetica", 15,"bold"))
-        c4 = Label(self.tab3, text="Facial Recognition Result", font=("Helvetica", 15,"bold"))
-        #c5 = Label(self.tab3, text="Object Detection Result", font=("Helvetica", 15,"bold"))
-        self.data1 = Label(self.tab3, text="", font=("Courier", 14))
-        self.data2 = Label(self.tab3, text="", font=("Courier", 14))
+        c1 = Label(self.tab3, text="Voice Recognition Text", font=("Helvetica", 14,"bold"))
+        c2 = Label(self.tab3, text="Sentiment Analysis Output", font=("Helvetica", 14,"bold"))
+        c3 = Label(self.tab3, text="Facial Recognition Photo", font=("Helvetica", 14,"bold"))
+        c4 = Label(self.tab3, text="Object Detection Result", font=("Helvetica", 14,"bold"))
+        c5 = Label(self.tab3, text="Facial Recognition Result", font=("Helvetica", 14,"bold"))
+        self.data1 = Label(self.tab3, text="", font=("Courier", 13))
+        self.data2 = Label(self.tab3, text="", font=("Courier", 13))
         self.data3 = Label(self.tab3, image=Facial_Recognition_Photo_img)
-        self.data4 = Label(self.tab3, text="", font=("Courier", 14))
-        #self.data5 = Label(self.tab3, text="", font=("Courier", 14))
+        self.data4 = Label(self.tab3, image=Object_Detection_Photo_img)
+        self.data5 = Label(self.tab3, text="", font=("Courier", 13))
 
-        c1.grid(row=0, column=0, padx=5, pady=5)
-        c2.grid(row=0, column=1, padx=5, pady=5)
-        c3.grid(row=2, column=0, padx=5, pady=5)
-        c4.grid(row=2, column=1, padx=5, pady=5)
-        #c5.grid(row=4, column=0, padx=5, pady=5, rowspan=1)
-        self.data1.grid(row=1, column=0, padx=5, pady=5)
-        self.data2.grid(row=1, column=1, padx=5, pady=5)
-        self.data3.grid(row=3, column=0, padx=5, pady=5)
-        self.data4.grid(row=3, column=1, padx=5, pady=5)
-        #self.data5.grid(row=5, column=0, padx=5, pady=5, rowspan=1)
+        c1.grid(row=0, column=0, padx=2, pady=0)
+        c2.grid(row=0, column=1, padx=2, pady=0)
+        c3.grid(row=2, column=0, padx=2, pady=0)
+        c4.grid(row=2, column=1, padx=2, pady=0)
+        c5.grid(row=4, column=0, padx=2, pady=0, rowspan=1)
+        self.data1.grid(row=1, column=0, padx=2, pady=0)
+        self.data2.grid(row=1, column=1, padx=2, pady=0)
+        self.data3.grid(row=3, column=0, padx=2, pady=0)
+        self.data4.grid(row=3, column=1, padx=2, pady=0)
+        self.data5.grid(row=5, column=0, padx=2, pady=0, rowspan=1)
 
         # tab 4 information : Sign up
         self.text = Label(self.tab4, text="Enter your Email here: ", font=("Helvetica", 18 ,"bold"))
@@ -125,16 +130,21 @@ class GUIapp():
             #ObjectDetectionResult = open('ObjectDetectionResult.txt', 'r').read()
             self.data1['text'] = VoiceRecognitionText
             self.data2['text'] = SentimentAnalysisOutput
-            self.data4['text'] = FacialRecognitionResult
-            #self.data5['text'] = ObjectDetectionResult
+            self.data5['text'] = FacialRecognitionResult
 
-            Facial_Recognition_Photo_path = "cropped.png"
-            img = Image.open(Facial_Recognition_Photo_path)
+            img = Image.open("cropped.png")
             img = img.resize((180, 180), Image.ANTIALIAS)
             Facial_Recognition_Photo_img = ImageTk.PhotoImage(img)
-            # update the photo
-            self.data3['image'] = Facial_Recognition_Photo_img
+                    
+            img2 = Image.open("backimage.png")
+            img2 = img2.resize((320, 180), Image.ANTIALIAS)
+            Object_Detection_Photo_img = ImageTk.PhotoImage(img2)
+
+            # update the photos
+            self.data3['image'] = Facial_Recognition_Photo_img            
+            self.data4['image'] = Object_Detection_Photo_img
             self.tab3.update()
+            
             # make the system sleep for 1 second
             time.sleep(1)
 
