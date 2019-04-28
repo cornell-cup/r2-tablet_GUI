@@ -54,7 +54,7 @@ sleep_final = 997
 move_final = 996
 attendance_final = 995
 sentiment_value = 0
-
+device_index = 2
 
 def chunkify(arr):
     acc_total = []
@@ -68,7 +68,7 @@ def chunkify(arr):
             acc_total.append(acc_chunk)
             acc_chunk = np.zeros(8192, dtype='int16')
             i = 0
-
+    
     return acc_total
 
 
@@ -122,7 +122,7 @@ def avg_direction(chunks):
 def remove_outliers(directions, avg_dir):
     res = []
     for direction in directions:
-        if (abs(direction - avg_dir) <= 50):
+        if (abs(direction - avg_dir) <= 60):
             res.append(direction)
 
     return res
@@ -136,7 +136,7 @@ def avg_list(lst):
 
     else:
         for elt in lst:
-            acc += lst
+            acc += elt
             i += 1
 
         return acc/i
@@ -156,9 +156,8 @@ def listen(r, mic):
 		chunks = chunkify(byte_arr)
 		tup = avg_direction(chunks)
 		avg_dir = tup[0]
-		print(int(avg_dir))
 		directions = remove_outliers(tup[1], avg_dir)
-
+		print(int(avg_dir))
 		if (not(directions == [])):
 		    print(int(avg_list(directions)))
 		else:
@@ -342,7 +341,7 @@ def main():
 	
 	### opens microphone instance that takes speech from human to convert to text
 	r = sr.Recognizer()
-	mic = sr.Microphone(2)
+	mic = sr.Microphone(device_index)
 
 	# tells R2 to wake up
 	while (True):
