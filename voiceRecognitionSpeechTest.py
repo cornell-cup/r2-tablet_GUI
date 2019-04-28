@@ -151,7 +151,7 @@ def listen(r, mic):
 		print("\n\n\nYou may begin talking:\n\n\n") #testing
 		audio = r.listen(source)
 		byte_data = audio.get_raw_data(16000, 2)
-		byte_arr = np.fromstring(byte_data, dtype='int16')
+		byte_arr = np.frombuffer(byte_data, dtype='int16')
 		chunks = chunkify(byte_arr)
 		tup = avg_direction(chunks)
 		avg_dir = tup[0]
