@@ -7,10 +7,27 @@ Speech Test
 File Created by Yanchen Zhan '22 (yz366)
 """
 
-########## MAIN FILE STARTS HERE
+# MAIN FILE STARTS HERE
 
 
-### import respective packages
+# import respective packages
+from threading import Lock, Thread
+import threading
+import retinasdk
+from watson_developer_cloud.natural_language_understanding_v1 \
+    import Features, EntitiesOptions, KeywordsOptions, SentimentOptions
+from watson_developer_cloud import NaturalLanguageUnderstandingV1
+import time
+import socket
+import client
+import wave
+import math
+import phase_test as pt
+from gcc_phat import gcc_phat
+import numpy as np
+import json
+import simpleaudio as sa
+from nltk.sentiment.vader import SentimentIntensityAnalyzer as sid
 import sys
 import speech_recognition as sr
 import pyaudio
@@ -18,27 +35,11 @@ import nltk
 nltk.download('vader_lexicon')
 nltk.download('punkt')
 nltk.download('averaged_perceptron_tagger')
-from nltk.sentiment.vader import SentimentIntensityAnalyzer as sid
-import simpleaudio as sa
-import json
-import numpy as np
-from gcc_phat import gcc_phat
-import math
-import client
-import socket
-import json
-import time
-from watson_developer_cloud import NaturalLanguageUnderstandingV1
-from watson_developer_cloud.natural_language_understanding_v1 \
-    import Features, EntitiesOptions, KeywordsOptions, SentimentOptions
-import retinasdk
-#apiKey = "69ba0c10-5e17-11e9-8f72-af685da1b20e"
-#apiKey = "f09d0fe0-3223-11e9-bb65-69ed2d3c7927" #FOR DEMO DAY ONLY
+# apiKey = "69ba0c10-5e17-11e9-8f72-af685da1b20e"
+# apiKey = "f09d0fe0-3223-11e9-bb65-69ed2d3c7927" #FOR DEMO DAY ONLY
 apiKey = "f8512d60-67b2-11e9-8f72-af685da1b20e"
 liteClient = retinasdk.LiteClient(apiKey)
 
-import threading
-from threading import Lock, Thread
 lock = Lock()
 lock2 = Lock()
 
@@ -55,6 +56,7 @@ move_final = 996
 attendance_final = 995
 sentiment_value = 0
 device_index = 1
+
 
 def chunkify(arr):
     acc_total = []
@@ -85,7 +87,8 @@ def get_direction(buf):
     tau = [0] * MIC_GROUP_N
     theta = [0] * MIC_GROUP_N
     for i, v in enumerate(MIC_GROUP):
-        tau[i], _ = gcc_phat(buf[v[0]::4], buf[v[1]::4], fs=16000, max_tau=MAX_TDOA_4, interp=1)
+        tau[i], _ = gcc_phat(buf[v[0]::4], buf[v[1]::4],
+                             fs=16000, max_tau=MAX_TDOA_4, interp=1)
         theta[i] = math.asin(tau[i] / MAX_TDOA_4) * 180 / math.pi
 
         if np.abs(theta[0]) < np.abs(theta[1]):
@@ -101,10 +104,10 @@ def get_direction(buf):
 
             best_guess = (best_guess + 90 + 180) % 360
 
-
         best_guess = (-best_guess + 120) % 360
 
     return best_guess
+
 
 def avg_direction(chunks):
     acc = 0
@@ -118,6 +121,7 @@ def avg_direction(chunks):
 
     return (acc/i, dir_chunks)
 
+
 def remove_outliers(directions, avg_dir):
     res = []
     for direction in directions:
@@ -125,6 +129,7 @@ def remove_outliers(directions, avg_dir):
             res.append(direction)
 
     return res
+
 
 def avg_list(lst):
     acc = 0
@@ -139,7 +144,63 @@ def avg_list(lst):
             i += 1
 
         return acc/i
-		
+
+
+def dir_from_wav(audio):
+	wav_data = audio.get_wav_data(16000)
+	wav_file = wave.open("output.wav", 'wb')
+	wav_file.setnchannels(3)
+	wav_file.setsampwidth(2)
+	wav_file.setframerate(16000)
+	wav_file.writeframes(wav_data)
+	wav_file.close()
+	read_file = wave.open("output.wav", 'rb')
+
+	N = 16000
+	channels = 3
+	window = np.hanning(N)
+	interp = 4*8
+	max_offset = int(rate * 0.1 / 340 * interp)
+	directions = []
+
+	while True:
+			data = read_file.readframes(N)
+			if (len(data) != multi.getsampwidth() * N * channels):
+					break
+
+			data = np.frombuffer(data, dtype='int16')
+			ref_buf = data[0::channels]
+			tau = [0] * 2
+			theta = [0] * 2
+			i = 0
+
+    	for ch in range(1, channels):
+        	sig_buf = data[ch::channels]
+        	tau[i], _ = pt.gcc_phat(sig_buf * window, ref_buf * window,
+        	                  fs=1, max_tau=max_offset, interp=interp)
+        	theta[i] = math.asin(tau[i] / MAX_TDOA_4) * 180 / math.pi
+					i += 1
+
+      if np.abs(theta[0]) < np.abs(theta[1]):
+          if theta[1] > 0:
+              best_guess = (theta[0] + 360) % 360
+          else:
+              best_guess = (180 - theta[0])
+      else:
+          if theta[0] < 0:
+              best_guess = (theta[1] + 360) % 360
+          else:
+              best_guess = (180 - theta[1])
+
+          best_guess = (best_guess + 90 + 180) % 360
+
+
+      best_guess = (-best_guess + 120) % 360
+			directions.append(best_guess)
+			
+	return avg_list(directions)
+
+
 """
 listen to user statement in mic
 returns spoken words from user OR 
@@ -156,11 +217,13 @@ def listen(r, mic):
 		tup = avg_direction(chunks)
 		avg_dir = tup[0]
 		directions = remove_outliers(tup[1], avg_dir)
-		print(int(avg_dir))
+		print("dir w/o removing outliers: " + str(int(avg_dir)))
 		if (not(directions == [])):
-		    print(int(avg_list(directions)))
+		    print("dir w/ removing outliers: " + str(int(avg_list(directions))))
 		else:
-		    print(int(avg_dir))
+		    print("no outliers to remove: " + str(int(avg_dir)))
+
+		print("dir from wav file: " + str(dir_from_wav(audio)))
 
 
 	try:
@@ -179,8 +242,8 @@ def react_with_sound (sentiment_value):
 	print ("about to play sound...")
 	
 	lead_folder = "/home/pi/Desktop/r2-tablet_GUI/R2FinalSounds/"
-	#lead_folder = "/home/yanchen-zhan/Documents/Cornell-Cup/r2-voice_recognition/Final/R2FinalSounds/"
-	#lead_folder = "C:\PythonProjects\\r2-voice_recognition\Final\R2FinalSounds\\"
+	# lead_folder = "/home/yanchen-zhan/Documents/Cornell-Cup/r2-voice_recognition/Final/R2FinalSounds/"
+	# lead_folder = "C:\PythonProjects\\r2-voice_recognition\Final\R2FinalSounds\\"
 	sounds = {"confirmation":"R2OK.wav" , "wake up":"R2Awake.wav" , "angry":"R2Angry.wav" , "good":"R2Good.wav" , \
 	"happy":"R2Happy.wav" , "neutral":"R2Neutral.wav" , "sad":"R2Sad.wav" , \
 	"sleep":"R2Sleep.wav", "no clue":"R2Confused.wav" , "move":"R2Move.wav" , \
@@ -209,7 +272,7 @@ def react_with_sound (sentiment_value):
 	else:
 		play_sound(lead_folder + sounds["good"])
 
-### play sound from speakers
+# play sound from speakers
 def play_sound(file_name):
 	wave_obj = sa.WaveObject.from_wave_file(file_name)
 	play_obj = wave_obj.play()
@@ -218,12 +281,12 @@ def play_sound(file_name):
 def stop():
 	print ("emergency invoked")
 	
-	#start exit procedure here
-	## begin by creating threads to send poweroff commands to each arduino asynchronously (if feasible)
-	#t0 = threading.thread(target = shutdown, args = ("",))
-	#t0.start()
+	# start exit procedure here
+	# begin by creating threads to send poweroff commands to each arduino asynchronously (if feasible)
+	# t0 = threading.thread(target = shutdown, args = ("",))
+	# t0.start()
 	
-	#t0.join()
+	# t0.join()
 	react_with_sound(sleep_final)
 	sys.exit()
 		
@@ -234,7 +297,7 @@ def wave(methodcnt): # NOTE - INSTANTIATE WITH SPECIAL CASE
 		setup_bool = True
 	else:"""
 	print ("waving")
-	#react_with_sound(confirmation_final)
+	# react_with_sound(confirmation_final)
 	return 0
 	
 def greet(methodcnt):
@@ -244,7 +307,7 @@ def greet(methodcnt):
 	else:"""
 	print ("greeting, don't forget to wave")
 	wave(methodcnt)
-	#react_with_sound(confirmation_final)
+	# react_with_sound(confirmation_final)
 	return 1
 
 # have R2 take attendance
@@ -287,8 +350,8 @@ def show_guns():
 	react_with_sound (confirmation_final)
 	return 6
 	
-#implement threading in here
-#locks implemented to prevent any conflict in data retrieval
+# implement threading in here
+# locks implemented to prevent any conflict in data retrieval
 def writeToVoice(input):
 	lock.acquire()
 	file=open('VoiceRecognitionText.txt','w+')
@@ -332,28 +395,28 @@ def main():
 	
 	methodcnt = False
 	
-	#method dispatcher to connect to functions
+	# method dispatcher to connect to functions
 	dispatcher = {'wave1':wave, 'greet1':greet, 'take_attendance1':take_attendance, 'grab_item1':grab_item}
 	# https://www.reddit.com/r/Python/comments/7udbs1/using_python_dict_to_call_functions_based_on_user/
 	
-	#test run to see if all r2 functionality working as expected
+	# test run to see if all r2 functionality working as expected
 	fndictGreetingsKeys = {"wave", "hello", "hi", "hey", "check", "attendance"}
 	fndictGetItemsKeys = {"water", "bottle", "stickers", "periscope", "nerf", "guns", "gun"} # NEED TO CHECK SPELLING OF PERISCOPE FOR VOICE RECOGNITION
 	
-	#in formation of dictionaries, all functions being called
+	# in formation of dictionaries, all functions being called
 	fndictGreetings = {"wave":dispatcher['wave1'], "hello":dispatcher['greet1'], "hi":dispatcher['greet1'], "hey":dispatcher['greet1'], "check":dispatcher['take_attendance1'], "attendance":dispatcher['take_attendance1']}
 	fndictGetItems = {"water":dispatcher['grab_item1'], "bottle":dispatcher['grab_item1'], "stickers":dispatcher['grab_item1'], "periscope":dispatcher['grab_item1'], "nerf":dispatcher['grab_item1'], "guns":dispatcher['grab_item1'], "gun":dispatcher['grab_item1']}
 	methodcnt = True
 	setup_bool = True
 	
-	### opens microphone instance that takes speech from human to convert to text
+	# opens microphone instance that takes speech from human to convert to text
 	r = sr.Recognizer()
 	mic = sr.Microphone(device_index) #qwerty
 	r.dynamic_energy_threshold = True
 	
 	# tells R2 to wake up
 	while (True):
-		#spoken_text = input("enter text here: ")
+		# spoken_text = input("enter text here: ")
 		spoken_text = listen(r, mic)
 		spoken_text = spoken_text.lower()
 		print("The following startup phrase was said:\n" + spoken_text + "\n")
@@ -364,7 +427,7 @@ def main():
 			react_with_sound(no_clue_final)
 		
 		elif ("r2 stop" in spoken_text):
-			#write(spoken_text)
+			# write(spoken_text)
 			stop()
 		
 		elif ("hey r2" in spoken_text):
@@ -375,13 +438,13 @@ def main():
 	# R2 waits to hear what user wants - CHANGE PROMPTS HERE
 	while (True):
 		
-		#spoken = input("enter text here 2: ")
+		# spoken = input("enter text here 2: ")
 		spoken = listen (r, mic)
 		spoken = spoken.lower()
 		print("The following text was said:\n" + spoken + "\n")
 		
 		if ("r2 stop" in spoken):
-			#write(spoken_text)
+			# write(spoken_text)
 			stop()
 		
 		# R2 unsure of input
@@ -394,7 +457,7 @@ def main():
 		
 		
 		else: 
-			#use NLTK to determine part of speech of first word spoken
+			# use NLTK to determine part of speech of first word spoken
 			tokens = nltk.word_tokenize (spoken)
 			tagged = nltk.pos_tag(tokens)
 			print (tagged[0])
@@ -402,11 +465,11 @@ def main():
 			
 			keywords = liteClient.getKeywords(spoken)
 					
-			#if question desired about Cornell Cup
+			# if question desired about Cornell Cup
 			if ("cup" in keywords and "cornell" in keywords or "competition" in keywords):
 				spit_info()
 				
-			#run through commands first
+			# run through commands first
 			elif ("wave" in spoken or "high five" in spoken or "VB" in tagged[0] or "JJ" in tagged[0]):
 				
 				if ("high five" in spoken):
@@ -431,7 +494,7 @@ def main():
 							break
 			
 			else:				
-				#sentiment analysis
+				# sentiment analysis
 				try:				
 					global sentiment_value
 					response = naturalLanguageUnderstanding.analyze(
