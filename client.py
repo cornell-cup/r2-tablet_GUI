@@ -146,8 +146,9 @@ def MakeFriend(name):
         else:
             print('I cannot add you as friend')
             text = 'I cannot add you as friend'
+
+        subprocess.check_output(['espeak', '-ven-us', text])
         writeResultToFile(text)
-        # TODO to send a new image along with name
         
     else:
         print("cannot detect a valid face")
