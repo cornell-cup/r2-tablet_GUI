@@ -15,7 +15,8 @@ nltk.download('averaged_perceptron_tagger')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer as sid
 #from random import *
 import simpleaudio as sa
-import client
+#import piimages_final
+#import client
 import socket
 import json
 import time
@@ -218,7 +219,11 @@ def sentiment(input):
 	print(sentiment_value)	
 	react_with_sound(sentiment_value)
 	return 7
-	
+
+def object_detection():
+	piimages_final.main()
+	return 8
+
 def main():
 	
 	methodcnt = False
@@ -284,7 +289,6 @@ def main():
 			tokens = nltk.word_tokenize (spoken)
 			tagged = nltk.pos_tag(tokens)
 			print (tagged[0])
-			
 			
 			keywords = liteClient.getKeywords(spoken)
 					
