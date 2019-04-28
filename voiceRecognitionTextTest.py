@@ -154,7 +154,11 @@ def take_attendance(methodcnt):
 	react_with_sound(attendance_final)
 	client.CheckIn()	
 	return 2
-		
+
+def make_friends(in):
+    friend = in[len("my name is ")+1:] #index where the first name appears
+    client.MakeFriends(friend)
+
 def grab_item(item, methodcnt):
 	"""global setup_bool
 	if (setup_bool == False or methodcnt == False):
