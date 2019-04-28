@@ -164,22 +164,21 @@ def dir_from_wav(audio):
 	directions = []
 
 	while True:
-			data = read_file.readframes(N)
-			if (len(data) != multi.getsampwidth() * N * channels):
-					break
+		data = read_file.readframes(N)
+		if (len(data) != multi.getsampwidth() * N * channels):
+				break
 
-			data = np.frombuffer(data, dtype='int16')
-			ref_buf = data[0::channels]
-			tau = [0] * 2
-			theta = [0] * 2
-			i = 0
+		data = np.frombuffer(data, dtype='int16')
+		ref_buf = data[0::channels]
+		tau = [0] * 2
+		theta = [0] * 2
+		i = 0
 
-    	for ch in range(1, channels):
-        	sig_buf = data[ch::channels]
-        	tau[i], _ = pt.gcc_phat(sig_buf * window, ref_buf * window,
-        	                  fs=1, max_tau=max_offset, interp=interp)
-        	theta[i] = math.asin(tau[i] / MAX_TDOA_4) * 180 / math.pi
-					i += 1
+		for ch in range(1, channels):
+			sig_buf = data[ch::channels]
+			tau[i], _ = pt.gcc_phat(sig_buf * window, ref_buf * window,fs=1, max_tau=max_offset, interp=interp)
+			theta[i] = math.asin(tau[i] / MAX_TDOA_4) * 180 / math.pi
+			i += 1
 
       if np.abs(theta[0]) < np.abs(theta[1]):
           if theta[1] > 0:
