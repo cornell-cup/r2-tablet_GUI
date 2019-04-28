@@ -389,7 +389,7 @@ def main():
 			print ("What?")
 			react_with_sound(no_clue_final)
 		
-		elif ("What do you see" in spoken):
+		elif ("what do you see" in spoken):
 			object_detection()
 		
 		
