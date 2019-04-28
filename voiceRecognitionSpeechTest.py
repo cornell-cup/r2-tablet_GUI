@@ -180,22 +180,22 @@ def dir_from_wav(audio):
 			theta[i] = math.asin(tau[i] / MAX_TDOA_4) * 180 / math.pi
 			i += 1
 
-      if np.abs(theta[0]) < np.abs(theta[1]):
-          if theta[1] > 0:
-              best_guess = (theta[0] + 360) % 360
-          else:
-              best_guess = (180 - theta[0])
-      else:
-          if theta[0] < 0:
-              best_guess = (theta[1] + 360) % 360
-          else:
-              best_guess = (180 - theta[1])
+		if np.abs(theta[0]) < np.abs(theta[1]):
+			if theta[1] > 0:
+				best_guess = (theta[0] + 360) % 360
+			else:
+				best_guess = (180 - theta[0])
+		else:
+			if theta[0] < 0:
+				best_guess = (theta[1] + 360) % 360
+			else:
+				best_guess = (180 - theta[1])
 
-          best_guess = (best_guess + 90 + 180) % 360
+			best_guess = (best_guess + 90 + 180) % 360
 
 
-      best_guess = (-best_guess + 120) % 360
-			directions.append(best_guess)
+		best_guess = (-best_guess + 120) % 360
+		directions.append(best_guess)
 			
 	return avg_list(directions)
 
