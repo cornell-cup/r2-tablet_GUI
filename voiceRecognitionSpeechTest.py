@@ -324,6 +324,10 @@ def sentiment(input):
 	react_with_sound(sentiment_value)
 	return 7
 	
+def object_detection():
+	piimages_final.main()
+	return 8
+
 def main():
 	
 	methodcnt = False
@@ -384,6 +388,10 @@ def main():
 		elif (spoken == ""):
 			print ("What?")
 			react_with_sound(no_clue_final)
+		
+		elif ("What do you see" in spoken):
+			object_detection()
+		
 		
 		else: 
 			#use NLTK to determine part of speech of first word spoken
