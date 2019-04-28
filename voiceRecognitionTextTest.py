@@ -16,7 +16,7 @@ from nltk.sentiment.vader import SentimentIntensityAnalyzer as sid
 #from random import *
 import simpleaudio as sa
 import piimages_final
-#import client
+import client
 import socket
 import json
 import time
