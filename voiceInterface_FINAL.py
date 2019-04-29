@@ -406,6 +406,10 @@ def main():
 		spoken_text = spoken_text.lower()
 		print("The following startup phrase was said:\n" + spoken_text + "\n")
 		
+		close_enough = ["ar2", "or to blue", "hey arthur", "ai2", "they are two", "ko2", 
+		"halo 2", "naruto", "ar jail", "ar-10", "airtel", "rdr2 hello", "q38", "hey r2",
+		"yo are two", "zr2", "you are two", "hey or two", "hey are two"]
+		
 		# R2 unsure of input
 		if (spoken_text == ""):
 			print ("What?")
@@ -414,11 +418,11 @@ def main():
 		elif ("r2 stop" in spoken_text):
 			stop()
 		
-		elif ("hey r2" in spoken_text):
+		elif (spoken_text in close_enough):
 			print ("awake")
 			react_with_sound(wakeup_final)
-			break			
-	
+			break	
+			
 	# R2 waits to hear what user wants - CHANGE PROMPTS HERE
 	while (True):
 		
