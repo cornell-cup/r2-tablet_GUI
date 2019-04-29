@@ -5,7 +5,7 @@ import threading
 class main_program():
 
 	def __init__(self):
-		voice_thread = threading.Thread(target = voiceRecognition.main, args = "")
+		voice_thread = threading.Thread(target = voiceInterface_FINAL.main, args = "")
 		gui_thread = threading.Thread(target = tkinterGUI.GUIapp, args = "")
 		
 		#print ("stahting")
