@@ -264,6 +264,9 @@ def main():
 		#spoken_text = spoken_text.lower()
 		print("The following startup phrase was said:\n" + spoken_text + "\n")
 
+		close_enough = ["ar2", "or to blue", "hey arthur", "ai2,they are two", "ko2", 
+		"halo 2", "naruto", "ar jail", "ar-10", "airtel", "rdr2 hello", "q38", "hey r2",
+		"yo are two", "zr2", "you are two", "hey or two"]
 		# R2 unsure of input
 		if (spoken_text == ""):
 			print ("What?")
