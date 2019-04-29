@@ -276,7 +276,7 @@ def main():
 			#write(spoken_text)
 			stop()
 
-		elif ("hey r2" in spoken_text):
+		elif (spoken_text in close_enough):
 			print ("awake")
 			react_with_sound(wakeup_final)
 			break			
