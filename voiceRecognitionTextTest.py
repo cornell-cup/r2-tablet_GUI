@@ -289,7 +289,7 @@ def take_attendance(methodcnt):
 have r2 add someone new to its attendance list
 """
 def make_friends(name):
-	friend = name[len("my name is "):] #index where the first name appears
+	friend = name[len("call me "):] #index where the first name appears
 	client.MakeFriend(friend)
 	return 4
 	
@@ -443,7 +443,7 @@ def main():
 			object_detection()
 		
 		#calling make friends
-		elif ("my name is " in spoken):
+		elif ("call me " in spoken):
 			make_friends(spoken)
 		
 		else: 
