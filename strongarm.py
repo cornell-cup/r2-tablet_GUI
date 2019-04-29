@@ -8,7 +8,7 @@ def run():
     time.sleep(1)
     while(True):
         time.sleep(1)
-        ser_strong.write("M2DP300E".encode('utf-8'))
+        ser_strong.write("M2DN300E".encode('utf-8'))
         #time.sleep(1)
         #ser_strong.write("M2DP300E".encode('utf-8'))
     ser_strong.close()

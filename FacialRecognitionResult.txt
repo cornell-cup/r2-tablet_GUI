@@ -1,3 +1,3 @@
-person: jordan
-checkInStatus: 1
-meetingType: 1
+person: None
+checkInStatus: fail
+meetingType: 999

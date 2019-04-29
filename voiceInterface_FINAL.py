@@ -285,7 +285,7 @@ have r2 take attendance for the lab
 """
 def take_attendance(methodcnt):
 	print ("checking in - F.R.")
-	react_with_sound(attendance_final)
+	#react_with_sound(attendance_final)
 	client.CheckIn()	
 	return 3
 
