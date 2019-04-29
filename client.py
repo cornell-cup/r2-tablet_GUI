@@ -15,6 +15,7 @@ from PIL import Image
 from num2words import num2words
 from subprocess import call
 import subprocess
+import locomotion
 #import robot_control
 
 # find largest face in the image
@@ -125,6 +126,7 @@ def CheckIn():
     else:
         print("cannot detect a valid face")
         subprocess.check_output(['espeak','-ven-us', 'I cannot see your face'])
+        locomotion.shake_head()
 
 
 # name should be the parameter to be passed in
