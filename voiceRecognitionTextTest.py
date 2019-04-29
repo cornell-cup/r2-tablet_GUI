@@ -42,7 +42,7 @@ import socket
 import client
 import wave
 import piimages_final
-import nerf
+import nerf_and_head
 import locomotion
 
 #for voice recognition/part of speech parser
