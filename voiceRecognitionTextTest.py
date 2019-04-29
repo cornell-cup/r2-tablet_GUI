@@ -411,14 +411,14 @@ def main():
 		"yo are two", "zr2", "you are two", "hey or two", "hey are two"]
 		
 		# R2 unsure of input
-		if (spoken_text == ""):
+		if (spoken == ""):
 			print ("What?")
 			react_with_sound(no_clue_final)
 		
-		elif ("r2 stop" in spoken_text):
+		elif ("r2 stop" in spoken):
 			stop()
 		
-		elif (spoken_text in close_enough):
+		elif (spoken in close_enough):
 			print ("awake")
 			react_with_sound(wakeup_final)
 			break	
