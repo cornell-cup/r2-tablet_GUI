@@ -9,6 +9,13 @@ File Created by Yanchen Zhan '22 (yz366)
 				R2 CS Subteam
 """
 
+"""
+spoken_text = listen(r, mic)
+spoken_text = spoken_text.lower()
+"""
+
+#spoken = input("enter command or sentence: ")
+
 ### import respective packages ###
 
 #for voice recognition
@@ -24,16 +31,15 @@ import pyaudio
 #api key for Cortical - keyword parser
 #apiKey = '07917240-690b-11e9-8f72-af685da1b20e' FOR FLORIDA
 apiKey = "f8512d60-67b2-11e9-8f72-af685da1b20e"
+import retinasdk
 liteClient = retinasdk.LiteClient(apiKey)
 
 #for Watson sentiment analysis
 import retinasdk
 from watson_developer_cloud.natural_language_understanding_v1 \
     import Features, EntitiesOptions, KeywordsOptions, SentimentOptions
-from watson_developer_cloud import NaturalLanguageUnderstandingV1\
-naturalLanguageUnderstanding = NaturalLanguageUnderstandingV1(
-version='2018-11-16',
-iam_apikey='_wxBEgRMBJ_WzXRWYzlTLYrNp3A0mmYEjKp-UQsdhvap')
+from watson_developer_cloud import NaturalLanguageUnderstandingV1
+naturalLanguageUnderstanding = NaturalLanguageUnderstandingV1(version='2018-11-16', iam_apikey='_wxBEgRMBJ_WzXRWYzlTLYrNp3A0mmYEjKp-UQsdhvap')
 
 #for communication with other programs
 import time
@@ -41,7 +47,7 @@ import socket
 import client
 import wave
 import piimages_final
-import nerf
+#import nerf_and_head
 import locomotion
 
 #for voice recognition/part of speech parser
@@ -287,7 +293,7 @@ def take_attendance(methodcnt):
 have r2 add someone new to its attendance list
 """
 def make_friends(name):
-	friend = name[len("my name is "):] #index where the first name appears
+	friend = name[len("call me "):] #index where the first name appears
 	client.MakeFriend(friend)
 	return 4
 	
@@ -402,23 +408,23 @@ def main():
 	
 	# tells R2 to wake up
 	while (True):
-		spoken_text = listen(r, mic)
-		spoken_text = spoken_text.lower()
-		print("The following startup phrase was said:\n" + spoken_text + "\n")
+		spoken = listen(r, mic)
+		spoken = spoken_text.lower()
+		print("The following startup phrase was said:\n" + spoken + "\n")
 		
 		close_enough = ["ar2", "or to blue", "hey arthur", "ai2", "they are two", "ko2", 
 		"halo 2", "naruto", "ar jail", "ar-10", "airtel", "rdr2 hello", "q38", "hey r2",
 		"yo are two", "zr2", "you are two", "hey or two", "hey are two"]
 		
 		# R2 unsure of input
-		if (spoken_text == ""):
+		if (spoken == ""):
 			print ("What?")
 			react_with_sound(no_clue_final)
 		
-		elif ("r2 stop" in spoken_text):
+		elif ("r2 stop" in spoken):
 			stop()
 		
-		elif (spoken_text in close_enough):
+		elif (spoken in close_enough):
 			print ("awake")
 			react_with_sound(wakeup_final)
 			break	
@@ -426,8 +432,8 @@ def main():
 	# R2 waits to hear what user wants - CHANGE PROMPTS HERE
 	while (True):
 		
-		spoken = listen (r, mic)
-		spoken = spoken.lower()
+		spoken = listen(r, mic)
+		spoken = spoken_text.lower()
 		print("The following text was said:\n" + spoken + "\n")
 		
 		if ("r2 stop" in spoken):
@@ -443,7 +449,7 @@ def main():
 			object_detection()
 		
 		#calling make friends
-		elif ("my name is " in spoken):
+		elif ("call me " in spoken):
 			make_friends(spoken)
 		
 		else: 
@@ -456,7 +462,7 @@ def main():
 			keywords = liteClient.getKeywords(spoken)
 				
 			# run through commands first
-			elif ("wave" in spoken or "high five" in spoken or "VB" in tagged[0] or "JJ" in tagged[0]):
+			if ("wave" in spoken or "high five" in spoken or "VB" in tagged[0] or "JJ" in tagged[0]):
 				
 				if ("high five" in spoken):
 					keywords.append("high five") #need to add a case for r2 to give a high five to user

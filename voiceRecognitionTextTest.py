@@ -9,6 +9,11 @@ File Created by Yanchen Zhan '22 (yz366)
 				R2 CS Subteam
 """
 
+"""
+spoken_text = listen(r, mic)
+spoken_text = spoken_text.lower()
+"""
+
 #spoken = input("enter command or sentence: ")
 
 ### import respective packages ###
