@@ -91,7 +91,7 @@ def DetectFace():
                 face_image = image[top:bottom, left:right]
                 pil_image = Image.fromarray(face_image)
                 pil_image.save('cropped.png', 'PNG')
-                
+
                 camera.close()
                 return True
         else:
