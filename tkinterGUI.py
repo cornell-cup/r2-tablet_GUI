@@ -1,5 +1,5 @@
-#from tkinter import *
-import tkinter
+from tkinter import *
+#import tkinter
 from tkinter import ttk
 from PIL import ImageTk, Image
 import threading
@@ -8,7 +8,7 @@ import imutils
 import cv2
 from imutils.video import VideoStream
 
-Tk = tkinter.Tk
+#Tk = tkinter.Tk
 
 class GUIapp():
 
