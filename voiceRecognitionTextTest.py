@@ -33,9 +33,7 @@ import retinasdk
 from watson_developer_cloud.natural_language_understanding_v1 \
     import Features, EntitiesOptions, KeywordsOptions, SentimentOptions
 from watson_developer_cloud import NaturalLanguageUnderstandingV1 \
-naturalLanguageUnderstanding = NaturalLanguageUnderstandingV1(
-	version='2018-11-16',
-	iam_apikey='_wxBEgRMBJ_WzXRWYzlTLYrNp3A0mmYEjKp-UQsdhvap')
+naturalLanguageUnderstanding = NaturalLanguageUnderstandingV1(version='2018-11-16', iam_apikey='_wxBEgRMBJ_WzXRWYzlTLYrNp3A0mmYEjKp-UQsdhvap')
 
 #for communication with other programs
 import time
