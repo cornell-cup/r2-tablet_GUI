@@ -47,10 +47,10 @@ class GUIapp():
 
         info = "        The original R2D2 Project focused upon creating a semi-autonomous " \
                "lab assistant that could navigate and map out its surrounding " \
-               "environment. Since last year, the team has expanded upon R2 ability " \
-               "to interact with its surroundings enabling the droid to complete tasks " \
-               "such as getting food from a fridge, opening a door, recognizing and " \
-               "greeting individual people, and even firing a nerf dart at a target. " \
+               "environment. Since last year, the team has expanded upon R2's ability " \
+               "to interact with its surroundings, enabling the droid to complete tasks " \
+               "such as lifting baskets, recognizing and greeting people " \
+               "and interacting with users via voice" \
                "To generate excitement and interest in robotics and engineering, " \
                "the team aims to advertise the R2 project and " \
                "generate interest in its design process through a Kickstarter campaign.\n" \

@@ -23,9 +23,10 @@ while(True):
 # ser_strong.close()
 '''
 def lift():
-    for i in range(0,2):
-        ser_strong.write("M2DN999E".encode('utf-8'))
+    for i in range(0,100):
+        ser_strong.write("M2DN1900E".encode('utf-8'))
         time.sleep(1)
-        ser_strong.write("M2DN800E".encode('utf-8'))
+        #ser_strong.write("M2DN800E".encode('utf-8'))
         time.sleep(1)
     ser_strong.close()
+lift()
