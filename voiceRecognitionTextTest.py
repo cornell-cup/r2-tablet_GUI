@@ -404,7 +404,7 @@ def main():
 	# tells R2 to wake up
 	while (True):
 		spoken = input("enter command or sentence: ")
-		print("The following startup phrase was said:\n" + spoken_text + "\n")
+		print("The following startup phrase was said:\n" + spoken + "\n")
 		
 		close_enough = ["ar2", "or to blue", "hey arthur", "ai2", "they are two", "ko2", 
 		"halo 2", "naruto", "ar jail", "ar-10", "airtel", "rdr2 hello", "q38", "hey r2",
