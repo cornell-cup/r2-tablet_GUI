@@ -20,7 +20,7 @@ import client
 import socket
 import json
 import time
-#import nerf
+#import nerf_and_head
 import locomotion
 #import precisearm
 from watson_developer_cloud import NaturalLanguageUnderstandingV1
