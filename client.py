@@ -91,11 +91,14 @@ def DetectFace():
                 face_image = image[top:bottom, left:right]
                 pil_image = Image.fromarray(face_image)
                 pil_image.save('cropped.png', 'PNG')
+                
+                camera.close()
                 return True
         else:
             # shake head and say i cannot find you
             subprocess.check_output(['espeak','-ven-us', 'I cannot see your face'])
             failure_tries += 1
+    camera.close()
     return False
 
 def writeResultToFile(text):
