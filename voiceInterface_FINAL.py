@@ -27,6 +27,7 @@ import simpleaudio as sa
 import sys
 import speech_recognition as sr
 import pyaudio
+import strongarm
 
 #api key for Cortical - keyword parser
 #apiKey = '07917240-690b-11e9-8f72-af685da1b20e' FOR FLORIDA
@@ -312,6 +313,8 @@ def grab_item(item, methodcnt):
 		open_periscope()
 	elif (item == "nerf" or "gun" in item):
 		show_guns()
+	elif(item == "basket"):
+		strongarm.lift()
 	else:
 		print ("grabbing " + item)
 		
