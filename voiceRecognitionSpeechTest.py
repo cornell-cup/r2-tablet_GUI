@@ -22,7 +22,6 @@ import socket
 import client
 import wave
 import math
-import phase_test
 from gcc_phat import gcc_phat
 import numpy as np
 import json
@@ -145,66 +144,6 @@ def avg_list(lst):
 
         return acc/i
 
-
-def dir_from_wav(audio):
-	wav_data = audio.get_wav_data(16000)
-	wav_file = wave.open("output.wav", 'wb')
-	wav_file.setnchannels(3)
-	wav_file.setsampwidth(2)
-	wav_file.setframerate(16000)
-	wav_file.writeframes(wav_data)
-	wav_file.close()
-	read_file = wave.open("output.wav", 'rb')
-
-	N = 16000
-	channels = 3
-	window = np.hanning(N)
-	interp = 4*8
-	max_offset = int(rate * 0.1 / 340 * interp)
-	directions = []
-
-	while True:
-		data = read_file.readframes(N)
-		if (len(data) != 2 * N * channels):
-				break
-
-		data = np.frombuffer(data, dtype='int16')
-		ref_buf = data[0::channels]
-		tau = [0] * 2
-		theta = [0] * 2
-		i = 0
-		SOUND_SPEED = 343.2
-
-		MIC_DISTANCE_4 = 0.08127
-		MAX_TDOA_4 = MIC_DISTANCE_4 / float(SOUND_SPEED)
-		best_guess = None
-
-		for ch in range(1, channels):
-			sig_buf = data[ch::channels]
-			tau[i], _ = phase_test.gcc_phat(sig_buf * window, ref_buf * window,fs=1, max_tau=max_offset, interp=interp)
-			theta[i] = math.asin(tau[i] / MAX_TDOA_4) * 180 / math.pi
-			i += 1
-
-		if np.abs(theta[0]) < np.abs(theta[1]):
-			if theta[1] > 0:
-				best_guess = (theta[0] + 360) % 360
-			else:
-				best_guess = (180 - theta[0])
-		else:
-			if theta[0] < 0:
-				best_guess = (theta[1] + 360) % 360
-			else:
-				best_guess = (180 - theta[1])
-
-			best_guess = (best_guess + 90 + 180) % 360
-
-
-		best_guess = (-best_guess + 120) % 360
-		directions.append(best_guess)
-			
-	return avg_list(directions)
-
-
 """
 listen to user statement in mic
 returns spoken words from user OR 
@@ -227,7 +166,6 @@ def listen(r, mic):
 		else:
 		    print("no outliers to remove: " + str(int(avg_dir)))
 
-		print("dir from wav file: " + str(dir_from_wav(audio)))
 
 
 	try:
