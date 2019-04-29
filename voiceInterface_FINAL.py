@@ -3,9 +3,10 @@ This is the final code structure for the R2D2 project
 Cornell Cup Robotics, Spring 2019
 
 File Created by Yanchen Zhan '22 (yz366)
-     Help from  Viren Shah '21 (vvs24)
-				Christian Polydor '21 (cp456)
+     Help from  Christian Polydor '21 (cp456)
 				Varun Maheshwari '22 (vm324)
+				Viren Shah '21 (vvs24)
+				R2 CS Subteam
 """
 
 ### import respective packages ###
@@ -396,7 +397,7 @@ def main():
 	
 	# opens microphone instance that takes speech from human to convert to text
 	r = sr.Recognizer()
-	mic = sr.Microphone(device_index) #qwerty
+	mic = sr.Microphone(device_index)
 	r.dynamic_energy_threshold = True
 	
 	# tells R2 to wake up
@@ -437,6 +438,9 @@ def main():
 		elif ("what do you see" in spoken):
 			object_detection()
 		
+		#calling make friends
+		elif ("my name is " in spoken):
+			make_friends(spoken)
 		
 		else: 
 			# use NLTK to determine part of speech of first word spoken
@@ -501,9 +505,5 @@ def main():
 		t1.join()
 		t2.join()
 			
-main()
-
-
-
-
+main() ### COMMENT THIS OUT WHEN MERGING WITH TABLET
 
