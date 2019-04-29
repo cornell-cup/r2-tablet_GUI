@@ -3,44 +3,60 @@ This is the final code structure for the R2D2 project
 Cornell Cup Robotics, Spring 2019
 
 File Created by Yanchen Zhan '22 (yz366)
+     Help from  Viren Shah '21 (vvs24)
+				Christian Polydor '21 (cp456)
+				Varun Maheshwari '22 (vm324)
 """
 
-# import respective packages
-from threading import Lock, Thread
-import threading
-import retinasdk
-from watson_developer_cloud.natural_language_understanding_v1 \
-    import Features, EntitiesOptions, KeywordsOptions, SentimentOptions
-from watson_developer_cloud import NaturalLanguageUnderstandingV1
-import time
-import socket
-import client
-import wave
+### import respective packages ###
+
+#for voice recognition
 import math
 from gcc_phat import gcc_phat
 import numpy as np
 import json
 import simpleaudio as sa
-from nltk.sentiment.vader import SentimentIntensityAnalyzer as sid
 import sys
 import speech_recognition as sr
 import pyaudio
-import nltk
-nltk.download('vader_lexicon')
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger')
-# apiKey = "69ba0c10-5e17-11e9-8f72-af685da1b20e"
-# apiKey = "f09d0fe0-3223-11e9-bb65-69ed2d3c7927" #FOR DEMO DAY ONLY
+
+#api key for Cortical - keyword parser
+#apiKey = '07917240-690b-11e9-8f72-af685da1b20e' FOR FLORIDA
 apiKey = "f8512d60-67b2-11e9-8f72-af685da1b20e"
 liteClient = retinasdk.LiteClient(apiKey)
 
-lock = Lock()
-lock2 = Lock()
-
+#for Watson sentiment analysis
+import retinasdk
+from watson_developer_cloud.natural_language_understanding_v1 \
+    import Features, EntitiesOptions, KeywordsOptions, SentimentOptions
+from watson_developer_cloud import NaturalLanguageUnderstandingV1\
 naturalLanguageUnderstanding = NaturalLanguageUnderstandingV1(
 version='2018-11-16',
 iam_apikey='_wxBEgRMBJ_WzXRWYzlTLYrNp3A0mmYEjKp-UQsdhvap')
 
+#for communication with other programs
+import time
+import socket
+import client
+import wave
+import piimages_final
+import nerf
+import locomotion
+
+#for voice recognition/part of speech parser
+from nltk.sentiment.vader import SentimentIntensityAnalyzer as sid
+import nltk
+nltk.download('vader_lexicon')
+nltk.download('punkt')
+nltk.download('averaged_perceptron_tagger')
+
+#for threading with GUI
+from threading import Lock, Thread
+import threading
+lock = Lock()
+lock2 = Lock()
+
+#key constants
 setup_bool = False
 confirmation_final = 1000
 no_clue_final = 999
@@ -51,7 +67,10 @@ attendance_final = 995
 sentiment_value = 0
 device_index = 1
 
-
+"""
+THE FUNCTIONS BELOW ARE USED SPECIFICALLY FOR 
+VOICE RECOGNITION (DIRECTION OF ARRIVAL AND PRECISION RECOGNITION)
+"""
 def chunkify(arr):
     acc_total = []
     acc_chunk = np.zeros(8192, dtype='int16')
@@ -161,15 +180,13 @@ def listen(r, mic):
 		else:
 		    print("no outliers to remove: " + str(int(avg_dir)))
 
-
-
 	try:
 		return r.recognize_google(audio)
 
 	except sr.UnknownValueError:
 		print ("What are you saying?") #testing
 		return ""
-
+	
 """
 plays respective sound from speakers
 based on sentiment analysis value
@@ -179,8 +196,6 @@ def react_with_sound (sentiment_value):
 	print ("about to play sound...")
 	
 	lead_folder = "/home/pi/Desktop/r2-tablet_GUI/R2FinalSounds/"
-	# lead_folder = "/home/yanchen-zhan/Documents/Cornell-Cup/r2-voice_recognition/Final/R2FinalSounds/"
-	# lead_folder = "C:\PythonProjects\\r2-voice_recognition\Final\R2FinalSounds\\"
 	sounds = {"confirmation":"R2OK.wav" , "wake up":"R2Awake.wav" , "angry":"R2Angry.wav" , "good":"R2Good.wav" , \
 	"happy":"R2Happy.wav" , "neutral":"R2Neutral.wav" , "sad":"R2Sad.wav" , \
 	"sleep":"R2Sleep.wav", "no clue":"R2Confused.wav" , "move":"R2Move.wav" , \
@@ -209,101 +224,118 @@ def react_with_sound (sentiment_value):
 	else:
 		play_sound(lead_folder + sounds["good"])
 
-# play sound from speakers
+"""
+play sounds from speaker
+"""
 def play_sound(file_name):
 	wave_obj = sa.WaveObject.from_wave_file(file_name)
 	play_obj = wave_obj.play()
 	play_obj.wait_done()
-
+	
+"""
+invocation used to tell r2 to stop
+emergency or intentional
+"""
 def stop():
 	print ("emergency invoked")
 	
 	# start exit procedure here
-	# begin by creating threads to send poweroff commands to each arduino asynchronously (if feasible)
-	# t0 = threading.thread(target = shutdown, args = ("",))
-	# t0.start()
-	
-	# t0.join()
+
 	react_with_sound(sleep_final)
 	sys.exit()
-		
-def wave(methodcnt): # NOTE - INSTANTIATE WITH SPECIAL CASE
-	"""global setup_bool
-	# initial bootup
-	if (setup_bool == False or methodcnt == False):
-		setup_bool = True
-	else:"""
-	print ("waving")
-	# react_with_sound(confirmation_final)
+
+"""
+helper method for r2 to move with xbox controls
+"""
+def move():
+	print ("moving")
+	
+	#IMPLEMENT HERE
+	
 	return 0
 	
-def greet(methodcnt):
-	"""global setup_bool
-	if (setup_bool == False or methodcnt == False):
-		setup_bool = True
-	else:"""
-	print ("greeting, don't forget to wave")
-	wave(methodcnt)
-	# react_with_sound(confirmation_final)
+"""
+invokes code for r2 to wave
+"""
+def wave(methodcnt): # NOTE - INSTANTIATE WITH SPECIAL CASE
+	print ("waving")
+	
+	#implement code here
+	
 	return 1
 
-# have R2 take attendance
+"""
+invokes code for r2 to greet people with sound and wave
+"""
+def greet(methodcnt):
+	print ("greeting, don't forget to wave")
+	wave(methodcnt)
+	react_with_sound(0.6)
+	return 2
+
+"""
+have r2 take attendance for the lab
+"""
 def take_attendance(methodcnt):
-	"""global setup_bool
-	if (setup_bool == False or methodcnt == False):
-		print ("in if statement")
-		setup_bool = True
-	else:"""
 	print ("checking in - F.R.")
 	react_with_sound(attendance_final)
 	client.CheckIn()	
-	return 2
-		
+	return 3
+
+"""
+have r2 add someone new to its attendance list
+"""
+def make_friends(name):
+	friend = name[len("my name is "):] #index where the first name appears
+	client.MakeFriend(friend)
+	return 4
+	
+"""
+have r2 display what it sees into gui
+"""
+def object_detection():
+	piimages_final.main()
+	return 5
+
+"""
+have r2 deploy/grab certain item
+"""
 def grab_item(item, methodcnt):
-	"""global setup_bool
-	if (setup_bool == False or methodcnt == False):
-		setup_bool = True"""
 	if (item == "periscope"):
 		open_periscope()
 	elif (item == "nerf" or "gun" in item):
 		show_guns()
 	else:
 		print ("grabbing " + item)
+		
+		#implement grabbing object here
+		
 		react_with_sound (confirmation_final)
 	return 3
-	
-def spit_info():
-	print ("info spit")
-	react_with_sound (confirmation_final)
-	return 4
 
+"""
+deploy the periscope
+"""
 def open_periscope():
 	print ("opening periscope")
-	react_with_sound (confirmation_final)
-	return 5
 	
+	#implement code here
+	
+	return 4
+
+"""
+deploys the nerf guns
+"""
 def show_guns():
 	print ("showing off dem guns...")
-	react_with_sound (confirmation_final)
-	return 6
 	
-# implement threading in here
-# locks implemented to prevent any conflict in data retrieval
-def writeToVoice(input):
-	lock.acquire()
-	file=open('VoiceRecognitionText.txt','w+')
-	file.write(input + "\r\n")
-	file.close()	
-	lock.release()
+	#implement code here
+	
+	return 5
 
-def writeToSentiment(score):
-	lock2.acquire()
-	score1 = str(score)
-	file=open('SentimentAnalysisOutput.txt','w+')
-	file.write(score1 + "\r\n")
-	file.close()	
-	lock2.release()
-
+"""
+responds to a user's sentiment given a phrase user utters
+"""
 def sentiment(input):
 	try:				
 		response = naturalLanguageUnderstanding.analyze(
@@ -322,19 +354,35 @@ def sentiment(input):
 			
 	print(sentiment_value)	
 	react_with_sound(sentiment_value)
-	return 7
-	
-def object_detection():
-	piimages_final.main()
-	return 8
+	return 6
+
+"""
+write to files that will output to gui
+"""
+def writeToVoice(input):
+	lock.acquire()
+	file=open('VoiceRecognitionText.txt','w+')
+	file.write(input + "\r\n")
+	file.close()	
+	lock.release()
+
+"""
+write to files that will output to gui
+"""
+def writeToSentiment(score):
+	lock2.acquire()
+	score1 = str(score)
+	file=open('SentimentAnalysisOutput.txt','w+')
+	file.write(score1 + "\r\n")
+	file.close()	
+	lock2.release()    
 
 def main():
 	
 	methodcnt = False
 	
-	# method dispatcher to connect to functions
+	# method dispatcher to connect to functions (https://www.reddit.com/r/Python/comments/7udbs1/using_python_dict_to_call_functions_based_on_user/)
 	dispatcher = {'wave1':wave, 'greet1':greet, 'take_attendance1':take_attendance, 'grab_item1':grab_item}
-	# https://www.reddit.com/r/Python/comments/7udbs1/using_python_dict_to_call_functions_based_on_user/
 	
 	# test run to see if all r2 functionality working as expected
 	fndictGreetingsKeys = {"wave", "hello", "hi", "hey", "check", "attendance"}
@@ -353,7 +401,6 @@ def main():
 	
 	# tells R2 to wake up
 	while (True):
-		# spoken_text = input("enter text here: ")
 		spoken_text = listen(r, mic)
 		spoken_text = spoken_text.lower()
 		print("The following startup phrase was said:\n" + spoken_text + "\n")
@@ -364,7 +411,6 @@ def main():
 			react_with_sound(no_clue_final)
 		
 		elif ("r2 stop" in spoken_text):
-			# write(spoken_text)
 			stop()
 		
 		elif ("hey r2" in spoken_text):
@@ -375,13 +421,11 @@ def main():
 	# R2 waits to hear what user wants - CHANGE PROMPTS HERE
 	while (True):
 		
-		# spoken = input("enter text here 2: ")
 		spoken = listen (r, mic)
 		spoken = spoken.lower()
 		print("The following text was said:\n" + spoken + "\n")
 		
 		if ("r2 stop" in spoken):
-			# write(spoken_text)
 			stop()
 		
 		# R2 unsure of input
@@ -389,6 +433,7 @@ def main():
 			print ("What?")
 			react_with_sound(no_clue_final)
 		
+		#calling object detection
 		elif ("what do you see" in spoken):
 			object_detection()
 		
@@ -399,18 +444,14 @@ def main():
 			tagged = nltk.pos_tag(tokens)
 			print (tagged[0])
 			
-			
+			#obtain keywords from uttered phrase
 			keywords = liteClient.getKeywords(spoken)
-					
-			# if question desired about Cornell Cup
-			if ("cup" in keywords and "cornell" in keywords or "competition" in keywords):
-				spit_info()
 				
 			# run through commands first
 			elif ("wave" in spoken or "high five" in spoken or "VB" in tagged[0] or "JJ" in tagged[0]):
 				
 				if ("high five" in spoken):
-					keywords.append("high five")
+					keywords.append("high five") #need to add a case for r2 to give a high five to user
 					
 				else:
 					for x in range(0, len(keywords)):
@@ -430,8 +471,8 @@ def main():
 							print ("in fndictGetItemsKey")
 							break
 			
+			# sentiment analysis
 			else:				
-				# sentiment analysis
 				try:				
 					global sentiment_value
 					response = naturalLanguageUnderstanding.analyze(
@@ -452,6 +493,7 @@ def main():
 				print(sentiment_value)	
 				react_with_sound(sentiment_value)
 		
+		#writing outcome to gui
 		t1 = threading.Thread(target = writeToVoice, args=(spoken,))
 		t2 = threading.Thread(target = writeToSentiment, args=(sentiment_value,))
 		t1.start()
@@ -460,3 +502,8 @@ def main():
 		t2.join()
 			
 main()
+
+
+
+
+
