@@ -249,7 +249,7 @@ def stop():
 	print ("emergency invoked")
 	
 	# start exit procedure here
-	locomotion.move_command(0,0)
+	locomotion.motor_command(0,0)
 	react_with_sound(sleep_final)
 	sys.exit()
 
