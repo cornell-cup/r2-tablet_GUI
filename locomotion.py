@@ -123,23 +123,23 @@ def run(distance):
     # Instantiate the controller
     joy = xbox.Joystick()
     while not joy.Back():
-            time.sleep(0.1)
-            degree = 0
-            x = 0
-            y = 0
-            
-            if joy.rightTrigger() > 0:
-                degree = 1
-            if joy.leftTrigger() > 0:
-                degree = -1
-            x = joy.leftX()
-            y = joy.leftY()
+        time.sleep(0.1)
+        degree = 0
+        x = 0
+        y = 0
 
-            motor_command(x, y)
-            head_command(degree)
-            if lidar.run_lidar() == False: #stop motors if lidar reads something within 12 inches
-                motor_command(0,0)
-                break
+        if joy.rightTrigger() > 0:
+            degree = 1
+        if joy.leftTrigger() > 0:
+            degree = -1
+        x = joy.leftX()
+        y = joy.leftY()
+
+        motor_command(x, y)
+        head_command(degree)
+        if lidar.run_lidar() == False: #stop motors if lidar reads something within 12 inches
+            motor_command(0,0)
+            break
 
 def head_command(degree):
     print(degree)
