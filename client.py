@@ -114,7 +114,7 @@ def CheckIn():
         speakResult(person, checkInStatus, meetingType)
         
         text = ''
-        text += 'person: ' + person + '\n'
+        text += 'person: ' + str(person) + '\n'
         text += 'checkInStatus: ' + str(checkInStatus) + '\n'
         text += 'meetingType: ' + str(meetingType)
         writeResultToFile(text)
