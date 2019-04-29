@@ -1,5 +1,5 @@
 import tkinterGUI
-import voiceRecognition
+import voiceInterface_FINAL
 import threading
 
 class main_program():
