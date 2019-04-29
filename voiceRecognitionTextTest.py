@@ -49,6 +49,7 @@ import wave
 import piimages_final
 #import nerf_and_head
 import locomotion
+import strongarm
 
 #for voice recognition/part of speech parser
 from nltk.sentiment.vader import SentimentIntensityAnalyzer as sid
@@ -258,7 +259,7 @@ def move():
 	print ("moving")
 	
 	#IMPLEMENT HERE
-	
+	locomotion.run(1)
 	return 0
 	
 """
@@ -266,7 +267,7 @@ invokes code for r2 to wave
 """
 def wave(methodcnt): # NOTE - INSTANTIATE WITH SPECIAL CASE
 	print ("waving")
-	
+	strongarm.lift()
 	#implement code here
 	
 	return 1
