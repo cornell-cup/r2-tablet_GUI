@@ -26,6 +26,7 @@ import pyaudio
 #api key for Cortical - keyword parser
 #apiKey = '07917240-690b-11e9-8f72-af685da1b20e' FOR FLORIDA
 apiKey = "f8512d60-67b2-11e9-8f72-af685da1b20e"
+import retinasdk
 liteClient = retinasdk.LiteClient(apiKey)
 
 #for Watson sentiment analysis
