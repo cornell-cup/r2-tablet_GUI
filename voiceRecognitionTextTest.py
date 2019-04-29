@@ -454,7 +454,7 @@ def main():
 			keywords = liteClient.getKeywords(spoken)
 				
 			# run through commands first
-			elif ("wave" in spoken or "high five" in spoken or "VB" in tagged[0] or "JJ" in tagged[0]):
+			if ("wave" in spoken or "high five" in spoken or "VB" in tagged[0] or "JJ" in tagged[0]):
 				
 				if ("high five" in spoken):
 					keywords.append("high five") #need to add a case for r2 to give a high five to user
