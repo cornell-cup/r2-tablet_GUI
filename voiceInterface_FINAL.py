@@ -28,6 +28,7 @@ import sys
 import speech_recognition as sr
 import pyaudio
 import strongarm
+import locomotion
 
 #api key for Cortical - keyword parser
 #apiKey = '07917240-690b-11e9-8f72-af685da1b20e' FOR FLORIDA
@@ -248,7 +249,7 @@ def stop():
 	print ("emergency invoked")
 	
 	# start exit procedure here
-
+	locomotion.move_command(0,0)
 	react_with_sound(sleep_final)
 	sys.exit()
 
@@ -257,8 +258,7 @@ helper method for r2 to move with xbox controls
 """
 def move():
 	print ("moving")
-	
-	#IMPLEMENT HERE
+	locomotion.run(1)
 	
 	return 0
 	
