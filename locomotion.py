@@ -123,6 +123,7 @@ def run(distance):
     # Instantiate the controller
     joy = xbox.Joystick()
     while not joy.Back():
+	    print("in joystick")
             time.sleep(0.1)
             degree = 0
             x = 0
@@ -138,6 +139,7 @@ def run(distance):
             motor_command(x, y)
             head_command(degree)
             if lidar.run_lidar() == False: #stop motors if lidar reads something within 12 inches
+		print("lidar stop")
                 motor_command(0,0)
                 break
 
