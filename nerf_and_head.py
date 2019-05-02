@@ -28,7 +28,6 @@ def run_nerf_gun():
             time.sleep(0.2)
             ser_nerf.close()
             break
-    
-run_nerf_gun()          
+           
     
         
