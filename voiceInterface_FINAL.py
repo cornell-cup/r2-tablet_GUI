@@ -50,6 +50,7 @@ import wave
 import piimages_final
 #import nerf_and_head
 import locomotion
+import strongarm
 
 #for voice recognition/part of speech parser
 from nltk.sentiment.vader import SentimentIntensityAnalyzer as sid
@@ -259,7 +260,7 @@ def move():
 	print ("moving")
 	
 	#IMPLEMENT HERE
-	
+	locomotion.run(1)
 	return 0
 	
 """
@@ -269,7 +270,7 @@ def wave(methodcnt): # NOTE - INSTANTIATE WITH SPECIAL CASE
 	print ("waving")
 	
 	#implement code here
-	
+	strongarm.lift()
 	return 1
 
 """
@@ -338,7 +339,7 @@ def show_guns():
 	print ("showing off dem guns...")
 	
 	#implement code here
-	
+	#nerf_and_head.run_nerf_gun()
 	return 5
 
 """
