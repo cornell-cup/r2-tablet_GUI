@@ -260,7 +260,7 @@ def move():
 	print ("moving")
 	
 	#IMPLEMENT HERE
-	locomotion.run(1)
+	locomotion.control()
 	return 0
 	
 """
