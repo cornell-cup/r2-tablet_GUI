@@ -141,6 +141,20 @@ def run(distance):
             motor_command(0,0)
             break
 
+def control():
+    command = input()
+    while(True):
+        if command == "w":
+            motor_command(-1, -1)
+        if command == "s":
+            motor_command(1, 1)
+        if command == "a":
+            motor_command(1, -1)
+        if command == "d":
+            motor_command(-1, 1)
+        if command == "x":
+            break
+            
 def head_command(degree):
     print(degree)
     global motors
