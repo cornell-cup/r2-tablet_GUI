@@ -134,7 +134,9 @@ def run(distance):
             degree = -1
         x = joy.leftX()
         y = joy.leftY()
-
+        print(x)
+        print(y)
+        print("x y values")
         motor_command(x, y)
         head_command(degree)
         #if lidar.run_lidar() == False: #stop motors if lidar reads something within 12 inches
