@@ -153,6 +153,7 @@ def control():
         if command == "d":
             motor_command(-1, 1)
         if command == "x":
+            motor_command(0,0)
             break
             
 def head_command(degree):
