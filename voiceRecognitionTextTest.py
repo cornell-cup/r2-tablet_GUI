@@ -317,6 +317,7 @@ def grab_item(item, methodcnt):
 		print ("grabbing " + item)
 		
 		#implement grabbing object here
+		strongarm.lift()
 		
 		react_with_sound (confirmation_final)
 	return 3

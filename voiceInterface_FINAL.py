@@ -271,6 +271,7 @@ def wave(methodcnt): # NOTE - INSTANTIATE WITH SPECIAL CASE
 	
 	#implement code here
 	strongarm.lift()
+	
 	return 1
 
 """
@@ -318,6 +319,7 @@ def grab_item(item, methodcnt):
 		print ("grabbing " + item)
 		
 		#implement grabbing object here
+		strongarm.lift()
 		
 		react_with_sound (confirmation_final)
 	return 3
@@ -445,6 +447,9 @@ def main():
 		elif (spoken == ""):
 			print ("What?")
 			react_with_sound(no_clue_final)
+		
+		elif ("lift" in spoken):
+			wave()
 		
 		#calling object detection
 		elif ("what do you see" in spoken):
