@@ -11,8 +11,8 @@ import traceback
 import readchar
 import sys
 import json
-import terabee
-import lidar
+#import terabee
+#import lidar
 from threading import Thread
 
 
